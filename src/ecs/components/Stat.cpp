@@ -34,7 +34,6 @@ namespace ecs
         {
             entity->Destroy();
         }
-        
     }
 
     ProjectileType Stat::GetWeapon() { return weapon; }

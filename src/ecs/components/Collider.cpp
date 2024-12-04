@@ -15,7 +15,6 @@ namespace ecs
     {
         tag = t;
     }
-
     void AABBCollider::Init()
     {
         if (!entity->HasComponent<Transform>())
