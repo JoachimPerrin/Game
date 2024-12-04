@@ -4,7 +4,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
-#include <SDL2/SDL_image.h>
 
 #include "Utils.hpp"
 
@@ -37,6 +36,12 @@ void Game::InitSDL()
         ExitWithError("Echec d'initialisation de la bibliothèque TTF");
     }
     std::cout << "TTF initialisé..." << std::endl;
+
+    if (Mix_OpenAudio(AUDIO_FREQ, MIX_DEFAULT_FORMAT, NB_CHANNELS, CHUNK_SIZE) < 0)
+    {
+        ExitWithError("Echec d'initialisation de la bibliothèque SDL_mixer");
+    }
+    std::cout << "SDL_mixer initialisé..." << std::endl;
 }
 
 void Game::InitWindow(const std::string &title, int width, int height, SDL_bool fullscreen)
@@ -75,12 +80,15 @@ void Game::Initialize()
 
     assets->AddFont("Dundalk", "assets/fonts/Dundalk.otf", 16);
 
+    assets->AddAudio("BackgroundMusic", "assets/audios/Theme1JC.mp3");
+
     menuState = std::make_unique<MenuState>();
     playingState = std::make_unique<PlayingState>();
     pausedState = std::make_unique<PausedState>();
 
     currentState = menuState;
     currentState->Enter(*this);
+
 }
 
 bool Game::IsRunning() const
@@ -148,6 +156,12 @@ void Game::Cleanup()
     {
         SDL_DestroyWindow(window);
         std::cout << "Fenêtre détruite" << std::endl;
+    }
+    if (music) // FIXME: pas au bon endroit
+    {
+        Mix_FreeMusic(music);
+        music = nullptr;
+        Mix_CloseAudio();
     }
     TTF_Quit();
     std::cout << "TTF quitté" << std::endl;

@@ -93,6 +93,7 @@ void GoManager::CreateEnemy(Vector2 position, ecs::EnemyType type)
     {
         enemy.GetComponent<ecs::Sprite>().Play("Spider");
         enemy.AddComponent<ecs::CircularCollider>("Spider");
+
     }
     else if (type == ecs::snake)
     {
