@@ -28,7 +28,10 @@
     - public avant private pour montrer l'interface directement.
     - méthodes avant attributs
     - groupements entre les méthodes/attributs de même genre (ex: getters, setters...) si il y en a trop
-
+5. Noms de Variables/Fonction:
+    - Nom des inputs de machine a etat: `I_NOM_DE_LA_VARIALE`
+    - Nom des actions de machine a etat: `A_NOM_DE_LA_VARIALE`
+    - Nom des states de machine a etat: `S_NOM_DE_LA_VARIAL`
 ## *eventuellement d'autres choses dans lesquels définir des conventions?*
 
 # Ressources
