@@ -42,14 +42,8 @@ namespace ecs
         SDL_RenderCopy(Game::renderer, labelTexture, &srcRect, &dstRect);
     }
 
-    void TimerLabel::Update()
+    void Label::Update()
     {
-        labelText = "Chrono : " + std::to_string(SDL_GetTicks() / 1000);
-        SetLabelText();
-    }
-    
-    void PositionLabel::Update()
-    {
-        //TODO: update selon la position du joueur
+        // SetLabelText(); //TODO: Refresh le text si nécessaire.
     }
 }

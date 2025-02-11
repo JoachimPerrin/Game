@@ -11,10 +11,10 @@ namespace ecs
     {
         if(isAnimated)
         {
-            if (id == "Player")
+            if (id == "Robot")
             {
-                Animation walk = Animation(0, 7, 100);
-                Animation idle = Animation(1, 10, 150);
+                Animation walk = Animation(0, 20, 50);
+                Animation idle = Animation(1, 20, 150);
                 animations.emplace("Idle", idle);
                 animations.emplace("Walk", walk);
                 Play("Idle");
