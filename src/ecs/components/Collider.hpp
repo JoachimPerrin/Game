@@ -1,3 +1,13 @@
+/**
+ * @file Collider.hpp
+ * @author //FIXME: mettre le blase de dilhan (+adresse@domain.com)
+ * @brief
+ * @version 0.1
+ * @date 2025-02-24
+ *
+ * @copyright Copyright (c) 2025
+ *
+ */
 #ifndef COLLIDERS_HPP
 #define COLLIDERS_HPP
 
@@ -8,13 +18,17 @@
 
 namespace ecs
 {
+    /**
+     * @brief Classe abstraite de base pour un collider
+     *
+     */
     class Collider : public Component
     {
     public:
         virtual void Init() override;
         virtual void Update() override;
 
-        virtual bool IsColliding(Collider& other) = 0;
+        virtual bool IsColliding(Collider &other) = 0;
 
         std::string tag;
         Transform *transform;
@@ -23,8 +37,8 @@ namespace ecs
     class AABBCollider : public Collider
     {
     public:
-        AABBCollider(const std::string& t);
-        
+        AABBCollider(const std::string &t);
+
         void Init() override;
 
         float GetWidth() const { return width; }
@@ -33,7 +47,7 @@ namespace ecs
         void SetWidth(float wid) { width = wid; }
         void SetHeight(float hei) { height = hei; }
 
-        bool IsColliding(Collider& other) override;
+        bool IsColliding(Collider &other) override;
 
     private:
         float width = -1;
@@ -43,15 +57,14 @@ namespace ecs
     class CircularCollider : public Collider
     {
     public:
-        CircularCollider(const std::string& t);
+        CircularCollider(const std::string &t);
 
         void Init() override;
 
         float GetRadius() const { return radius; }
         void SetRadius(float rad) { radius = rad; }
 
-        bool IsColliding(Collider& other) override;
-
+        bool IsColliding(Collider &other) override;
 
     private:
         float radius = -1;
