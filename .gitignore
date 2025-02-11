@@ -1,5 +1,4 @@
 build/
-TODO.md
 .vscode/
 # Peut-être le mettre dans le github repo?
 docker-compose.yaml
