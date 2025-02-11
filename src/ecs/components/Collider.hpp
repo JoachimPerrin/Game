@@ -67,7 +67,8 @@ namespace ecs
         float GetRadius() const { return radius; }
         Vector2 GetCenter() const { return center; }
         void SetRadius(float rad) { radius = rad; }
-        void SetCenter(float x,float y){
+        void SetCenter(float x, float y)
+        {
             center.x = x;
             center.y = y;
         }

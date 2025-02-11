@@ -13,6 +13,7 @@ auto &enemy(Game::manager.GetGroup(Game::enemies));
 auto &tiles(Game::manager.GetGroup(Game::maps));
 auto &collidables(Game::manager.GetGroup(Game::collidable));
 auto &projectiles(Game::manager.GetGroup(Game::projectiles));
+auto &labels(Game::manager.GetGroup(Game::labels));
 
 PlayingState::PlayingState()
 {
@@ -40,9 +41,11 @@ void PlayingState::Enter(Game &game)
         std::cout << "load de la map\n"
                   << std::endl;
         mapManager->LoadMap("LobbyMap", "LobbyTileSet");
-        std::cout << "\nmap loaded" << std::endl;
         Game::gobjs->CreatePlayer(player);
         Game::gobjs->CreateEnemy(Vector2(400.0f, 600.0f), ecs::spider);
+        Game::gobjs->CreateEnemy(Vector2(600.0f, 800.0f), ecs::bat);
+        SDL_Rect pos = {100, 100, 360, 50};
+        Game::gobjs->CreateLabel(pos, "test numero un", "Dundalk");
     }
 }
 
@@ -157,5 +160,9 @@ void PlayingState::Render(Game &game)
         // {
         //     c->Render();
         // }
+        for (auto &l : labels)
+        {
+            l->Render();
+        }
     }
 }

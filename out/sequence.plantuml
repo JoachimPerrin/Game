@@ -1,0 +1,52 @@
+@startuml Players
+title uml sequence diagram
+skinparam SequenceMessageAlign right
+skinparam ResponseMessageBelowArrow true
+
+actor Players #White/DarkRed
+participant Host #White/Blue
+
+Host --> Host : launch Host
+
+activate Host #Gray
+group Connexion
+
+Players --> Players : launch Sh13 exec
+activate Players #LightGrey
+Players --> Host : Connexion request
+Players <-- Host : Connexion response
+Players --> Players : Open game window
+end
+
+== Entering Game State ==
+
+Players <-- Host : Starting hand
+
+loop while playing
+    Players <-- Host : active player id
+
+    alt number of symbole to a player
+        Players <-- Host : square of the hint table
+    else symbole to every players
+        Players <-- Host : column of the hint table
+    else try to guess
+        alt true
+            Players <-- Host : break loop
+        else false
+            Players <-- Host : continue
+        end
+    end
+
+    Players --> Players : Hint table completion
+end
+
+Players <-- Host : Game won
+Host --> Host : connexion re-enabled
+Players --> Players : Close window
+
+deactivate Players
+
+Host --> Host : Stop Host
+deactivate Host
+
+@enduml

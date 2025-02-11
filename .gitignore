@@ -3,3 +3,4 @@ docker/
 .vscode/
 .DS_Store
 LocalNotes.md
+out/*.plantuml
