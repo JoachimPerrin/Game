@@ -1,0 +1,80 @@
+@startuml classes
+skinparam style strictuml
+skinparam SequenceMessageAlignment center
+skinparam DefaultFontName Arial
+
+class "Rviz 2" as rviz2 {
+}
+
+package outer_tools #White/DarkRed
+{
+    class "Command Input" as cmd_in {
+        + On_press()
+        + On_release()
+        - cmd_pos_pub_: Publisher<Twist>
+    }
+
+    class "Configuration selection" as config_select {
+        + Load_Config()
+    }
+}
+package inner_loop #White/DarkBlue
+{
+    class "Joint State Topic" as joint_state {
+        [JointState]
+    }
+    class "Joint Goal Topic" as joint_target{
+        [JointState]
+    }
+    class "Joint Command Topic" as cmd_joint{
+        [JointState]
+    }
+    class "Position Command" as cmd_pos{
+        [Twist]
+    }
+    class "Current robot position" as robot_pos{
+        [Twist]
+    }
+
+    class "Position control node" as control_node {
+        - cmd_joint_pub_: Publisher<JointState>
+        - joint_target_sub_: Publisher<JointState>
+        - joint_state_sub_: Publisher<JointState>
+        - joint_target_callback(): void 
+        - joint_state_callback(): void 
+    }
+
+    class "Kinetics computation node" as kinetics_node {
+        - joint_target_pub_: Publisher<JointState>
+        - cmd_pos_sub_: Subscription<Twist>
+        - cmd_pos_callback(): void
+    }
+
+    class "Robot state node" as robot_node {
+        - joint_state_pub_: Publisher<JointState>
+        - cmd_joint_sub_: Publisher<JointState>
+        - robot_pos_pub_: Subscription<Twist>
+        - timer_: TimerBase
+        - timer_callback(): void 
+        - cmd_joint_callback(): void
+    }
+}
+
+cmd_in --> cmd_pos
+
+config_select -right-> kinetics_node: "DH selection"
+config_select --> rviz2: "Meshes and URDF files"
+joint_state --> rviz2: "current joints positions"
+
+kinetics_node --> joint_target 
+kinetics_node <-- cmd_pos
+
+control_node --> cmd_joint 
+control_node <-up- joint_state
+control_node <-- joint_target
+
+robot_node -up-> joint_state 
+robot_node --> robot_pos 
+robot_node <-- cmd_joint
+
+@enduml

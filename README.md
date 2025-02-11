@@ -3,19 +3,6 @@ Joachim Perrin - Rami Aridi - Grigor Pelibossian
 
 Licenses : SDL2
 
-## Explication du projet
-Texte explicatif du projet
-
-![imageClasse](ClasseUml.png?raw=true  "diagramme uml de classe pour expliquer l'ECS")  
-Explication de l'image ci-dessus
-
-![imageSequence](SequenceUml.png?raw=true  "diagramme uml de séquences pour expliquer le déroulement du jeu")  
-Explication de l'image ci-dessus
-
-![imageEtat](EtatUml.png?raw=true  "diagramme uml d'etat pour expliquer les GameStates")  
-Explication de l'image ci-dessus
-
-
 ## Installation
 
 First install SDL2 + image + ttf + mix ...
@@ -51,5 +38,21 @@ En gros, juste installer le binaire correspondant à la distro cible?
     cd Game
     make run
 ```
+
+## Explication du projet
+Texte explicatif du projet
+
+![imageClasse](out/uml/classe/classes.png?raw=true  "diagramme uml de classe pour expliquer l'ECS")  
+
+(il faudra probablement représenter l'ECS, puis les manager, puis un exemple comme player dans des diagrammes séparés)
+
+![imageSequence](out/uml/sequence/Players.png?raw=true  "diagramme uml de séquences pour expliquer le déroulement du jeu")  
+
+Pas la bonne image, juste pour montrer que c'est possible
+
+
+![imageEtat](out/uml/etat/Players.png?raw=true  "diagramme uml d'etat pour expliquer les GameStates")  
+Explication de l'image ci-dessus
+
 
 ## Gameplay

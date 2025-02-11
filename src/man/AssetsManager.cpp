@@ -71,7 +71,7 @@ void AssetManager::AddFont(std::string id, const std::string path, int fontSize)
     TTF_Font *font = TTF_OpenFont(path.c_str(), fontSize);
     if (font == NULL)
     {
-        std::cout << "error loading font" << std::endl;
+        std::cout << "error loading font " << path << std::endl;
     }
     fonts.emplace(id, font);
     std::cout << "allocation de la police " << id << std::endl;

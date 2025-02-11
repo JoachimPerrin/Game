@@ -15,6 +15,7 @@ namespace ecs
 
     void Label::SetLabelText()
     {
+        std::cout << "creating a labal with text : " << labelText << "\t using font :" << labelFont << std::endl;
         SDL_Surface *surface = TTF_RenderText_Blended(Game::assets->GetFont(labelFont), labelText.c_str(), textColor);
         if (surface == NULL)
         {

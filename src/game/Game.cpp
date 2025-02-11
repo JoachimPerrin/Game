@@ -78,6 +78,8 @@ void Game::Initialize()
     assets->AddTexture("LobbyTileSet", "assets/images/TSLobby.png");
     assets->AddTexture("enemy", "assets/images/AEnemies.png");
     assets->AddTexture("projectile", "assets/images/AProjectiles.png");
+
+    assets->AddFont("Dundalk", "assets/fonts/Dundalk.otf", 16);
 }
 
 bool Game::IsRunning() const

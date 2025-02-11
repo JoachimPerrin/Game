@@ -1,4 +1,4 @@
-# Conventions:
+# Conventions
 
 ## Usage de GIT
 
@@ -29,7 +29,12 @@
     - méthodes avant attributs
     - groupements entre les méthodes/attributs de même genre (ex: getters, setters...) si il y en a trop
 
-## *eventuellement d'autres choses dans lesquels définir des conventions?*
+## Direction artistique
+
+1. Utilisation d'une palette pour limiter le nombre de couleurs:  
+![imageClasse](assets/PalettePyxelEdit.png?raw=true)  
+2. Thème en lien avec la robotique:  
+![imageClasse](assets/images/ARobot.png?raw=true)
 
 # Ressources
 
