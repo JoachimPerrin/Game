@@ -71,7 +71,7 @@ void Game::Initialize()
     currentState = menuState;
     currentState->Enter(*this);
 
-    assets->AddTexture("Player", "assets/images/APlayer.png");
+    assets->AddTexture("Robot", "assets/images/ARobot.png");
     assets->AddTexture("LobbyTileSet", "assets/images/TSLobby.png");
 }
 

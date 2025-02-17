@@ -2,9 +2,9 @@
 
 Refaire et tester :
     Projectiles
-    Lables
+    Lable
     Enemies
-    Colliders ( collisions en rebonds pour circular-circular et en glissement pour circular-AABB)
+    Colliders (collisions en rebonds pour circular-circular et en glissement pour circular-AABB)
 
 Revoir TOUS les fichiers pour :
     laisser uniquement les includes nécessaires
@@ -26,7 +26,6 @@ Multijoueur
         Exemple : P1 est un robot, P2 est un drone de support
     Deux joueurs symétriques ie la camera dézoom pour les inclure tout les deux
     Écran Scyndé
-
     si deter, faire en sorte que P2 puisse être en réseau
 
 Système de son avec SDL_mixer
@@ -60,7 +59,6 @@ Propreté du projet
     Debugging avec valgrind/gdb pour checker les memleaks
     Messages de debug claire, envoyer
     Licence pour SDL2?
-    
 
 Tests
     Boost.Test ??
@@ -69,6 +67,7 @@ Un logger in game???
 La DA
 
 # Pour aller loiinnn
+Statistiques de performances
 Utiliser des threads pour bien comprendre (pour quels usages?)
 Publier le jeu??? (ultra propre et brillerait cv)
 Faire en sorte qu'avec docker on puisse tester sur plus de platforms (ajouter des dockerfiles, et des services dans le docker-compose)

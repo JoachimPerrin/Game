@@ -8,6 +8,10 @@
 
 namespace ecs
 {
+    /**
+     * @brief Classe abstraite de base pour un collider
+     * 
+     */
     class Collider : public Component
     {
     public:
