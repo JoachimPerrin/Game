@@ -1,8 +1,7 @@
 # Game Title
-
 Joachim Perrin - Rami Aridi - Grigor Pelibossian
 
-Licenses : SDL2 
+Licenses : SDL2
 
 ## Explication du projet
 Texte explicatif du projet
