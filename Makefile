@@ -29,13 +29,13 @@ all: $(TARGET)
 $(TARGET): $(OBJ)
 	@ mkdir -p $(dir $@)
 	@ $(CXX) $(CXXFLAGS) -o $@ $(OBJ) $(LDFLAGS)
-	@echo "Compilation terminée"
+	@ echo "Compilation terminée"
 
 # Compilation des fichiers .cpp en fichiers .o
 $(OBJ_DIR)/%.o: src/%.cpp
 	@ mkdir -p $(dir $@)
 	@ $(CXX) $(CXXFLAGS) -c $< -o $@
-	@echo "Compilation de $<"
+	@ echo "Compilation de $<"
 
 # Nettoyage des fichiers générés
 clean:
@@ -46,11 +46,5 @@ run: $(TARGET)
 	./$(TARGET)
 # Si on arrive à faire un script de lancement propre je jouit
 
-# Affichage des informations de débogage
-debug:
-	@echo "Source files: $(SRC)"
-	@echo "Object files: $(OBJ)"
-	@echo "CXXFLAGS: $(CXXFLAGS)"
-
 # Cibles spéciales
-.PHONY: all clean run debug
+.PHONY: all clean run

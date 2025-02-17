@@ -1,5 +1,4 @@
 # URGENT (avant de se lancer dans le projet)
-
 Refaire et tester :
     Projectiles
     Lable
@@ -11,9 +10,8 @@ Revoir TOUS les fichiers pour :
     les faire fonctionner
 
 # À faire au début du projet
-
 Trouver un titre, thème
-Graphique : palette + efforts pyxeledit, 
+Graphique : palette + efforts pyxeledit,
 Gameplay cool etc
 
 # Idées de tâches à se répartir
