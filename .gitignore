@@ -6,4 +6,4 @@ OrganisationGIT.md
 docker-compose.yaml
 Dockerfile
 .dockerignore
-.code-workspace
+Game.code-workspace
