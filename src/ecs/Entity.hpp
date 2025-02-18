@@ -20,7 +20,7 @@ namespace ecs
     using GroupBitSet = std::bitset<maxGroups>;
     using ComponentBitSet = std::bitset<maxComponents>;
     using ComponentArray = std::array<Component *, maxComponents>;
-    
+
     class EntitiesManager;
     class Component;
 
@@ -31,7 +31,6 @@ namespace ecs
     template <typename T>
     ComponentID GetComponentTypeID() noexcept
     {
-        static_assert(std::is_base_of<Component, T>::value, "T must inherit from Component");
         static ComponentID typeID = GetNewComponentTypeID();
         return typeID;
     }
@@ -40,7 +39,7 @@ namespace ecs
     {
     public:
         Entity(EntitiesManager &mManager);
-        
+
         void Update();
         void Render();
 

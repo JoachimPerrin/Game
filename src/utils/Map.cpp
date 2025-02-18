@@ -9,8 +9,9 @@
 extern ecs::EntitiesManager manager;
 
 Map::Map(std::string texID, int mScale, int tSize)
- : textureID(texID), tileSize(tSize), mapScale(mScale), scaledTileSize(mScale * tSize)
-{}
+    : textureID(texID), tileSize(tSize), mapScale(mScale), scaledTileSize(mScale * tSize)
+{
+}
 
 void Map::LoadMap(std::string path, int sizeX, int sizeY)
 {
@@ -19,7 +20,7 @@ void Map::LoadMap(std::string path, int sizeX, int sizeY)
 
     std::fstream mapFile;
     mapFile.open(path);
-    if(!mapFile.is_open())
+    if (!mapFile.is_open())
     {
         std::cerr << "Was not able to open the tile set file" << std::endl;
         return;
@@ -62,42 +63,42 @@ void Map::LoadMap(std::string path, int sizeX, int sizeY)
                 {
                 case 0: // barre gauche
                     tcol.GetComponent<ecs::Transform>().SetPos(Vector2(x * scaledTileSize, y * scaledTileSize));
-                    tcol.GetComponent<ecs::Transform>().SetSize(Vector2(scaledTileSize/2, scaledTileSize));
+                    tcol.GetComponent<ecs::Transform>().SetSize(Vector2(scaledTileSize / 2, scaledTileSize));
                     tcol.AddComponent<ecs::AABBCollider>("terrain");
                     break;
                 case 1: // barre droite
                     tcol.GetComponent<ecs::Transform>().SetPos(Vector2(xCentered, y * scaledTileSize));
-                    tcol.GetComponent<ecs::Transform>().SetSize(Vector2(scaledTileSize/2, scaledTileSize));
+                    tcol.GetComponent<ecs::Transform>().SetSize(Vector2(scaledTileSize / 2, scaledTileSize));
                     tcol.AddComponent<ecs::AABBCollider>("terrain");
                     break;
                 case 2: // barre haut
                     tcol.GetComponent<ecs::Transform>().SetPos(Vector2(x * scaledTileSize, y * scaledTileSize));
-                    tcol.GetComponent<ecs::Transform>().SetSize(Vector2(scaledTileSize, scaledTileSize/2));
+                    tcol.GetComponent<ecs::Transform>().SetSize(Vector2(scaledTileSize, scaledTileSize / 2));
                     tcol.AddComponent<ecs::AABBCollider>("terrain");
                     break;
                 case 3: // barre bas
                     tcol.GetComponent<ecs::Transform>().SetPos(Vector2(x * scaledTileSize, yCentered));
-                    tcol.GetComponent<ecs::Transform>().SetSize(Vector2(scaledTileSize, scaledTileSize/2));
+                    tcol.GetComponent<ecs::Transform>().SetSize(Vector2(scaledTileSize, scaledTileSize / 2));
                     tcol.AddComponent<ecs::AABBCollider>("terrain");
                     break;
                 case 4: // coin bas gauche
                     tcol.GetComponent<ecs::Transform>().SetPos(Vector2(x * scaledTileSize, yCentered));
-                    tcol.GetComponent<ecs::Transform>().SetSize(Vector2(scaledTileSize/2, scaledTileSize/2));
+                    tcol.GetComponent<ecs::Transform>().SetSize(Vector2(scaledTileSize / 2, scaledTileSize / 2));
                     tcol.AddComponent<ecs::AABBCollider>("terrain");
                     break;
                 case 5: // coin bas droite
                     tcol.GetComponent<ecs::Transform>().SetPos(Vector2(xCentered, yCentered));
-                    tcol.GetComponent<ecs::Transform>().SetSize(Vector2(scaledTileSize/2, scaledTileSize/2));
+                    tcol.GetComponent<ecs::Transform>().SetSize(Vector2(scaledTileSize / 2, scaledTileSize / 2));
                     tcol.AddComponent<ecs::AABBCollider>("terrain");
                     break;
                 case 6: // coin haut gauche
                     tcol.GetComponent<ecs::Transform>().SetPos(Vector2(x * scaledTileSize, y * scaledTileSize));
-                    tcol.GetComponent<ecs::Transform>().SetSize(Vector2(scaledTileSize/2, scaledTileSize/2));
+                    tcol.GetComponent<ecs::Transform>().SetSize(Vector2(scaledTileSize / 2, scaledTileSize / 2));
                     tcol.AddComponent<ecs::AABBCollider>("terrain");
                     break;
                 case 7: // coin haut droite
                     tcol.GetComponent<ecs::Transform>().SetPos(Vector2(xCentered, y * scaledTileSize));
-                    tcol.GetComponent<ecs::Transform>().SetSize(Vector2(scaledTileSize/2, scaledTileSize/2));
+                    tcol.GetComponent<ecs::Transform>().SetSize(Vector2(scaledTileSize / 2, scaledTileSize / 2));
                     tcol.AddComponent<ecs::AABBCollider>("terrain");
                     break;
                 case 8:
@@ -109,7 +110,7 @@ void Map::LoadMap(std::string path, int sizeX, int sizeY)
                 default:
                     break;
                 }
-                tcol.AddGroup(Game::colliders);
+                tcol.AddGroup(Game::collidable);
                 mapFile.ignore();
             }
             else

@@ -34,9 +34,9 @@ public:
     friend class MenuState;
 
     // FIXME: à voir pour le passer en PlayingState mais labels/widget utile pour tous en réalité (peut-être possible de le scinder en plusieurs parties)
-    enum GroupLabels : std::size_t
+    enum GroupEnum : std::size_t
     {
-        colliders,
+        collidable,
         projectiles,
         labels,
         widgets,
