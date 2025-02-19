@@ -3,6 +3,7 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_image.h>
 
 #include "Utils.hpp"
 
@@ -129,7 +130,7 @@ void Game::Render()
 
 void Game::Cleanup()
 {   
-    if (renderer)
+    if (renderer != nullptr)
     {
         SDL_DestroyRenderer(renderer);
         std::cout << "Rendu détruit" << std::endl;
@@ -141,6 +142,8 @@ void Game::Cleanup()
     }
     TTF_Quit();
     std::cout << "TTF quitté" << std::endl;
+    IMG_Quit();
+    std::cout << "IMG quitté" << std::endl;
     SDL_Quit();
     std::cout << "SDL quittée" << std::endl;
 }

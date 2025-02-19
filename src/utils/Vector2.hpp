@@ -1,6 +1,7 @@
 #ifndef VECTOR2_HPP
 #define VECTOR2_HPP
 
+#include <cmath>
 #include <iostream>
 
 class Vector2
@@ -13,6 +14,7 @@ public:
     Vector2 &subtract(const Vector2 &vec);
     Vector2 &multiply(const Vector2 &vec);
     Vector2 &divide(const Vector2 &vec);
+    float norm(const Vector2 &vec);
 
     friend Vector2 operator+(const Vector2 &vec1, const Vector2 &vec2);
     friend Vector2 operator+(const Vector2 &vec, float scalar);
