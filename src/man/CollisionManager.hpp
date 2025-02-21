@@ -22,7 +22,7 @@ class CollisionManager
 {
 public:
     void Update(ecs::EntitiesManager &EMan);
-    void ReboundCollision(ecs::Entity * entity,Vector2 vec);
-    void GlideCollision(ecs::Entity * entity,Vector2 vec);
+    void ReboundCollision(ecs::Entity *entity, Vector2 vec);
+    void GlideCollision(ecs::Entity *entity, Vector2 vec);
 };
 #endif

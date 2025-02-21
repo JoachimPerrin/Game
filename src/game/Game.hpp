@@ -48,7 +48,7 @@ public:
 
     static SDL_Renderer *renderer;
     static AssetManager *assets;
-    static GOManager *gobjs;
+    static GoManager *gobjs;
     static ecs::EntitiesManager manager;
     static SDL_Event event;
 

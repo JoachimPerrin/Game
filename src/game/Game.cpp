@@ -10,7 +10,7 @@
 
 SDL_Renderer *Game::renderer = nullptr;
 AssetManager *Game::assets = new AssetManager();
-GOManager *Game::gobjs = new GOManager(&Game::manager);
+GoManager *Game::gobjs = new GoManager(&Game::manager);
 ecs::EntitiesManager Game::manager;
 SDL_Event Game::event;
 
