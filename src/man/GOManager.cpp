@@ -43,7 +43,7 @@ void GOManager::CreateProjectile(Vector2 position, Vector2 velocity, int range, 
 void GOManager::CreateEnemy(Vector2 position, EnemyType type)
 {
     auto &enemy(manager->AddEntity());
-    enemy.AddComponent<Transform>(Vector2(position.x, position.y), Vector2(0.0f, 0.0f), Vector2(3.0f, 3.0f));
+    enemy.AddComponent<Transform>(Vector2(position.x, position.y), Vector2(0.0f, 0.0f), Vector2(32.0f, 32.0f), Vector2(3.0f, 3.0f));
     enemy.AddComponent<Sprite>("enemy", true);
     enemy.AddComponent<Stat>();
     if (type == bat)

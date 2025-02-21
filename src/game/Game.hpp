@@ -13,6 +13,7 @@
 
 const int Window_H = 1200;
 const int Window_W = 1600;
+class PlayingState;
 
 class Game
 {

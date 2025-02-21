@@ -74,6 +74,7 @@ void Game::Initialize()
 
     assets->AddTexture("Robot", "assets/images/ARobot.png");
     assets->AddTexture("LobbyTileSet", "assets/images/TSLobby.png");
+    assets->AddTexture("enemy","assets/images/AEnemies.png");
 }
 
 bool Game::IsRunning() const

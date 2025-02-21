@@ -4,6 +4,38 @@ Vector2::Vector2() : x(0.0f), y(0.0f) {}
 
 Vector2::Vector2(float x, float y) : x(x), y(y) {}
 
+float Vector2::magnitude() const {
+    return std::sqrt(x * x + y * y);
+}
+
+Vector2 Vector2::Normalized() const {
+    float mag = magnitude();
+    if (mag > 0) {
+        return Vector2(x / mag, y / mag);
+    }
+    return Vector2(0, 0);
+}
+
+Vector2 Vector2::Project(const Vector2 &onto) const {
+    float dotProduct = x * onto.x + y * onto.y;
+    float ontoMagnitudeSquared = onto.x * onto.x + onto.y * onto.y;
+    
+    if (ontoMagnitudeSquared == 0) {
+        return Vector2(0, 0);
+    }
+    
+    float scale = dotProduct / ontoMagnitudeSquared;
+    return Vector2(onto.x * scale, onto.y * scale);
+}
+
+bool operator==(const Vector2 &vec1, const Vector2 &vec2) {
+    return vec1.x == vec2.x && vec1.y == vec2.y;
+}
+
+bool operator!=(const Vector2 &vec1, const Vector2 &vec2) {
+    return !(vec1 == vec2);
+}
+
 Vector2 &Vector2::add(const Vector2 &vec)
 {
     x += vec.x;

@@ -27,6 +27,8 @@ namespace ecs
 
     Vector2 AABBCollider::IsColliding(Collider &other)
     {
+        if (!transform) return Vector2(0, 0); // Check if transform is valid
+
         if (AABBCollider *aabb = dynamic_cast<AABBCollider *>(&other))
         {
             if (aabb->transform->GetPos().x + aabb->transform->GetSize().x > transform->GetPos().x)
@@ -34,7 +36,7 @@ namespace ecs
                 Vector2 vec;
                 return vec;
             }
-            // TODO:Logique de collision entre deux AABBCollider
+            // TODO: Logic for collision between two AABBCollider
         }
         else if (CircularCollider *circle = dynamic_cast<CircularCollider *>(&other))
         {
@@ -43,7 +45,7 @@ namespace ecs
                 Vector2 vec;
                 return vec;
             }
-            // TODO:Logique de collision entre un AABBCollider et un CircularCollider
+            // TODO: Logic for collision between an AABBCollider and a CircularCollider
         }
         Vector2 vec;
         return vec;
@@ -68,28 +70,53 @@ namespace ecs
 
     Vector2 CircularCollider::IsColliding(Collider &other)
     {
-        Vector2 posA = transform->GetPos();
-        Vector2 sizeA = transform->GetSize();
+        SetCenter(transform->GetPos().x + transform->GetSize().x / 2, transform->GetPos().y + transform->GetSize().y / 2);
+        Vector2 centerA = GetCenter();
         if (AABBCollider *aabb = dynamic_cast<AABBCollider *>(&other))
         {
-            Vector2 posB = aabb->transform->GetPos();
-
-            return (posA.x < posB.x + aabb->transform->GetSize().x &&
-                    posA.x + sizeA.x > posB.x &&
-                    posA.y < posB.y + aabb->transform->GetSize().y &&
-                    posA.y + transform->GetSize().y > posB.y);
+            // AABB vs Circle collision
+            Vector2 aabbPos = aabb->transform->GetPos();
+            Vector2 aabbSize = aabb->transform->GetSize();
+            
+            // Find closest point on AABB to circle
+            float closestX = std::max(aabbPos.x, std::min(centerA.x, aabbPos.x + aabbSize.x));
+            float closestY = std::max(aabbPos.y, std::min(centerA.y, aabbPos.y + aabbSize.y));
+            
+            // Calculate distance between circle center and closest point
+            float dx = centerA.x - closestX;
+            float dy = centerA.y - closestY;
+            float distanceSquared = (dx * dx) + (dy * dy);
+            
+            // Check if distance is less than radius
+            if (distanceSquared < (radius * radius)) {
+                float distance = std::sqrt(distanceSquared);
+                float depth = radius - distance;
+                Vector2 normal = Vector2(dx, dy).Normalized();
+                return normal * depth;
+            }
+            return Vector2(0, 0);
         }
         else if (CircularCollider *circle = dynamic_cast<CircularCollider *>(&other))
         {
-            Vector2 posB = circle->transform->GetPos();
-            float closestX = std::max(posA.x, std::min(posB.x, posA.x + aabb->transform->GetSize().x));
-            float closestY = std::max(posA.y, std::min(posB.y, posA.y + transform->GetSize().y));
-
-            float dx = posB.x - closestX;
-            float dy = posB.y - closestY;
-            return (dx * dx + dy * dy) < (circle->GetRadius() * circle->GetRadius());
+            std::cout << "Circle vs Circle collision" << std::endl;
+            // Circle vs Circle collision
+            Vector2 centerB = circle->GetCenter();
+            std::cout << "Center A: " << centerA << std::endl;
+            float dx = centerA.x - centerB.x;
+            float dy = centerA.y - centerB.y;
+            float distanceSquared = (dx * dx) + (dy * dy);
+            float radiusSum = radius + circle->GetRadius();
+            std ::cout << "Distance: " << dx << std::endl;
+            std::cout << "Radius Sum: " << radiusSum*radiusSum << std::endl;
+            if (distanceSquared < (radiusSum * radiusSum)) {
+                float distance = std::sqrt(distanceSquared);
+                float depth = radiusSum - distance;
+                Vector2 normal = (centerA - centerB).Normalized();
+                return normal * depth;
+            }
+            return Vector2(0, 0);
         }
 
-        return false;
+        return Vector2(0, 0); // No collision
     }
 }

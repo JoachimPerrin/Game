@@ -16,6 +16,10 @@ public:
     Vector2 &divide(const Vector2 &vec);
     float norm(const Vector2 &vec);
 
+    float magnitude() const;
+    Vector2 Normalized() const;
+    Vector2 Project(const Vector2 &onto) const;
+
     friend Vector2 operator+(const Vector2 &vec1, const Vector2 &vec2);
     friend Vector2 operator+(const Vector2 &vec, float scalar);
     friend Vector2 operator+(float scalar, const Vector2 &vec);
@@ -45,6 +49,9 @@ public:
     Vector2 &operator*=(const Vector2 &vec);
     Vector2 &operator/=(const Vector2 &vec);
     Vector2 &operator*=(float scalar);
+
+    friend bool operator==(const Vector2 &vec1, const Vector2 &vec2);
+    friend bool operator!=(const Vector2 &vec1, const Vector2 &vec2);
 
     Vector2 &zero();
 
