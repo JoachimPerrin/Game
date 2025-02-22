@@ -19,6 +19,7 @@ public:
     float magnitude() const;
     Vector2 Normalized() const;
     Vector2 Project(const Vector2 &onto) const;
+    Vector2 Normal() const; // New method to calculate the normal vector
 
     friend Vector2 operator+(const Vector2 &vec1, const Vector2 &vec2);
     friend Vector2 operator+(const Vector2 &vec, float scalar);

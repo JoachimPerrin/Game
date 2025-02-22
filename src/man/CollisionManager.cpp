@@ -14,7 +14,7 @@ void CollisionManager::ReboundCollision(ecs::Entity *entity, Vector2 vec)
     if (entity->HasComponent<Transform>())
     {
         // Reverse the velocity based on the normal
-        entity->GetComponent<Transform>().SetVel(vec*Vector2(0.1,0.1));
+        entity->GetComponent<Transform>().SetVel(vec*Vector2(0.01,0.01));
     }
 }
 
@@ -28,8 +28,6 @@ void CollisionManager::Update(ecs::EntitiesManager &EMan)
 
     for (auto &player : players)
     {
-        if (!player)
-            continue; // Check if player is valid
         for (auto &col : colidable)
         {
             if (!col)
@@ -45,8 +43,6 @@ void CollisionManager::Update(ecs::EntitiesManager &EMan)
         }
         for (auto &enemy : enemies)
         {
-            if (!enemy)
-                continue; // Check if enemy is valid
             if (player->HasComponent<CircularCollider>() && enemy->HasComponent<CircularCollider>())
             {
                 vec = player->GetComponent<CircularCollider>().IsColliding(enemy->GetComponent<CircularCollider>());
@@ -65,4 +61,29 @@ void CollisionManager::Update(ecs::EntitiesManager &EMan)
             
         }
     }
+    // for (auto &enemy : enemies)
+    // {
+    //     for (auto &player : players)
+    //     {
+    //         if (!enemy)
+    //             continue; // Check if enemy is valid
+    //         if (enemy->HasComponent<CircularCollider>() && player->HasComponent<CircularCollider>())
+    //         {
+    //             vec = enemy->GetComponent<CircularCollider>().IsColliding(player->GetComponent<CircularCollider>());
+    //             if (vec != nullvect)
+    //             {
+    //                 std::cout << "Colliding" << std::endl;
+    //                 ReboundCollision(enemy, vec);
+    //             }
+    //             std::cout << vec << std::endl;
+    //             std::cout << player->GetComponent<CircularCollider>().GetCenter() << std::endl;
+    //         }
+    //         else
+    //         {
+    //             std::cout << "No collider" << std::endl;
+    //         }
+            
+    //     }
+    // }
+
 }
