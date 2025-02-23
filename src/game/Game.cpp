@@ -17,7 +17,7 @@ Game::Game()
     : window(nullptr), running(true)
 {
     InitSDL();
-    InitWindow("I am having fun right now", Window_W, Window_H, SDL_FALSE);
+    InitWindow("I am having SOOO MUCH fun right now !", Window_W, Window_H, SDL_FALSE);
     InitRenderer();
     Initialize();
 }
@@ -73,8 +73,9 @@ void Game::Initialize()
     currentState->Enter(*this);
 
     assets->AddTexture("Robot", "assets/images/ARobot.png");
+    assets->AddTexture("ColMark", "assets/images/ColliderMark.png");
     assets->AddTexture("LobbyTileSet", "assets/images/TSLobby.png");
-    assets->AddTexture("enemy","assets/images/AEnemies.png");
+    assets->AddTexture("enemy", "assets/images/AEnemies.png");
 }
 
 bool Game::IsRunning() const
@@ -117,7 +118,7 @@ void Game::Render()
 {
     if (currentState)
     {
-        if(SDL_RenderClear(renderer) != 0)
+        if (SDL_RenderClear(renderer) != 0)
         {
             std::cerr << "Echec de nettoyage du rendu: " << SDL_GetError() << std::endl;
             return;
@@ -130,7 +131,7 @@ void Game::Render()
 }
 
 void Game::Cleanup()
-{   
+{
     if (renderer != nullptr)
     {
         SDL_DestroyRenderer(renderer);
