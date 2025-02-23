@@ -10,11 +10,14 @@ namespace ecs
     void Collider::Update()
     {
     }
+    {
+    }
 
     AABBCollider::AABBCollider(const std::string &t)
     {
         tag = t;
     }
+
 
     void AABBCollider::Init()
     {
@@ -93,7 +96,7 @@ namespace ecs
             }
             return Vector2(0, 0);
         }
-        else if (CircularCollider *circle = dynamic_cast<CircularCollider *>(&other))
+        else if (CircularCollider *circle = dynamic_cast<CircularCollider*>(&other))
         {
             // Circle vs Circle collision
             Vector2 centerB = circle->GetCenter();

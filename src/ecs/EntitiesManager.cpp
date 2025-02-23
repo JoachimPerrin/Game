@@ -2,20 +2,33 @@
 #include "ECS.hpp"
 
 #include <algorithm>
+
 namespace ecs
 {
+    /**
+     * @brief Update all the entities.
+     *
+     */
     void EntitiesManager::Update()
     {
         for (auto &e : entities)
             e->Update();
     }
 
+    /**
+     * @brief Render all the entities.
+     *
+     */
     void EntitiesManager::Render()
     {
         for (auto &e : entities)
             e->Render();
     }
 
+    /**
+     * @brief Refresh the entities. Remove the entities that are not active or that do not belong to a group.
+     *
+     */
     void EntitiesManager::Refresh()
     {
         for (auto i(0u); i < maxGroups; i++)
@@ -37,16 +50,33 @@ namespace ecs
                        std::end(entities));
     }
 
+    /**
+     * @brief Add an entity to a group.
+     *
+     * @param mEntity
+     * @param mGroup
+     */
     void EntitiesManager::AddToGroup(Entity *mEntity, Group mGroup)
     {
         groupedEntities[mGroup].emplace_back(mEntity);
     }
 
+    /**
+     * @brief Get a group of entities.
+     *
+     * @param mGroup
+     * @return std::vector<Entity *>&
+     */
     std::vector<Entity *> &EntitiesManager::GetGroup(Group mGroup)
     {
         return groupedEntities[mGroup];
     }
 
+    /**
+     * @brief Add an entity to the entities list.
+     *
+     * @return Entity&
+     */
     Entity &EntitiesManager::AddEntity()
     {
         Entity *e = new Entity(*this);
@@ -55,12 +85,16 @@ namespace ecs
         return *e;
     }
 
+    /**
+     * @brief Clear all the entities.
+     *
+     */
     void EntitiesManager::ClearEntities()
     {
         for (auto &e : entities)
         {
             e->Destroy();
         }
-        Refresh(); // Appel de Refresh pour supprimer les entités détruites
+        Refresh();
     }
 }

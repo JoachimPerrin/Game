@@ -1,3 +1,13 @@
+/**
+ * @file Collider.hpp
+ * @author //FIXME: mettre le blase de dilhan (+adresse@domain.com)
+ * @brief
+ * @version 0.1
+ * @date 2025-02-24
+ *
+ * @copyright Copyright (c) 2025
+ *
+ */
 #ifndef COLLIDERS_HPP
 #define COLLIDERS_HPP
 
@@ -10,6 +20,10 @@
 
 namespace ecs
 {
+    /**
+     * @brief Classe abstraite de base pour un collider
+     *
+     */
     class Collider : public Component
     {
     public:
