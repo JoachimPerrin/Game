@@ -7,9 +7,9 @@
 namespace ecs
 {
     Sprite::Sprite(std::string id, bool isAnimated = false)
-    : animated(isAnimated)
+        : animated(isAnimated)
     {
-        if(isAnimated)
+        if (isAnimated)
         {
             if (id == "Robot")
             {
@@ -48,10 +48,10 @@ namespace ecs
     void Sprite::Init()
     {
         transform = &entity->GetComponent<Transform>();
-        srcRect = { 0,
-                    0,
-                    static_cast<int>(transform->GetSize().x),
-                    static_cast<int>(transform->GetSize().y) };
+        srcRect = {0,
+                   0,
+                   static_cast<int>(transform->GetSize().x),
+                   static_cast<int>(transform->GetSize().y)};
     }
 
     void Sprite::Update()
@@ -69,7 +69,6 @@ namespace ecs
 
     void Sprite::SetTexture(std::string id)
     {
-        std::cout << id << std::endl;
         texture = Game::assets->GetTexture(id);
         if (texture == nullptr)
             std::cout << "attention, le sprite de " << id << " n'est pas chargé" << std::endl;

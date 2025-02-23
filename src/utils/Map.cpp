@@ -1,7 +1,9 @@
 #include "Map.hpp"
 #include "ECS.hpp"
 #include "Tile.hpp"
+#include "Transform.hpp"
 #include "Collider.hpp"
+#include "Sprite.hpp"
 #include "Game.hpp"
 #include <iostream>
 #include <fstream>
@@ -59,6 +61,7 @@ void Map::LoadMap(std::string path, int sizeX, int sizeY)
                 int digit = c - '0';
                 auto &tcol(Game::manager.AddEntity());
                 tcol.AddComponent<ecs::Transform>();
+                tcol.AddComponent<ecs::Sprite>("ColMark", false);
                 switch (digit)
                 {
                 case 0: // barre gauche
@@ -100,12 +103,6 @@ void Map::LoadMap(std::string path, int sizeX, int sizeY)
                     tcol.GetComponent<ecs::Transform>().SetPos(Vector2(xCentered, y * scaledTileSize));
                     tcol.GetComponent<ecs::Transform>().SetSize(Vector2(scaledTileSize / 2, scaledTileSize / 2));
                     tcol.AddComponent<ecs::AABBCollider>("terrain");
-                    break;
-                case 8:
-                    tcol.GetComponent<ecs::Transform>().SetPos(Vector2(x * scaledTileSize, y * scaledTileSize));
-                    tcol.GetComponent<ecs::Transform>().SetSize(Vector2(scaledTileSize, scaledTileSize));
-                    tcol.GetComponent<ecs::Transform>().SetSize(Vector2(scaledTileSize, scaledTileSize));
-                    tcol.AddComponent<ecs::CircularCollider>("terrain");
                     break;
                 default:
                     break;
