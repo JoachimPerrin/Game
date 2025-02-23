@@ -8,9 +8,10 @@ SDL_Rect PlayingState::camera = {0, 0, Window_W, Window_H};
 MapManager *PlayingState::mapManager = new MapManager();
 CollisionManager *collisions = new CollisionManager();
 auto &player(Game::manager.AddEntity());
-auto &timer(Game::manager.AddEntity());
+
 auto &enemy(Game::manager.GetGroup(Game::enemies));
 auto &tiles(Game::manager.GetGroup(Game::maps));
+auto &collidables(Game::manager.GetGroup(Game::collidable));
 
 PlayingState::PlayingState()
 {
@@ -136,6 +137,10 @@ void PlayingState::Render(Game &game)
         for (auto &e : enemy)
         {
             e->Render();
+        }
+        for (auto &c : collidables)
+        {
+            c->Render();
         }
     }
 }

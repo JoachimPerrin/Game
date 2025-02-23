@@ -1,8 +1,5 @@
 build/
+docker/
 .vscode/
 .DS_Store
 LocalNotes.md
-
-docker-compose.yaml
-Dockerfile
-.dockerignore
