@@ -13,6 +13,7 @@
 
 const int Window_H = 1200;
 const int Window_W = 1600;
+class PlayingState;
 
 class Game
 {
@@ -34,9 +35,9 @@ public:
     friend class MenuState;
 
     // FIXME: à voir pour le passer en PlayingState mais labels/widget utile pour tous en réalité (peut-être possible de le scinder en plusieurs parties)
-    enum GroupLabels : std::size_t
+    enum GroupEnum : std::size_t
     {
-        colliders,
+        collidable,
         projectiles,
         labels,
         widgets,
@@ -47,7 +48,7 @@ public:
 
     static SDL_Renderer *renderer;
     static AssetManager *assets;
-    static GOManager *gobjs;
+    static GoManager *gobjs;
     static ecs::EntitiesManager manager;
     static SDL_Event event;
 

@@ -1,9 +1,26 @@
-# URGENT (avant de se lancer dans le projet)
-Refaire et tester :
-    Projectiles
-    Lable
-    Enemies
-    Colliders (collisions en rebonds pour circular-circular et en glissement pour circular-AABB)
+# Objectifs globaux du jeu
+- Système de profondeur basique avec deux groupes (underlay, overlay) respectivement render avant et après le joueur
+- Système de craft avec ressources collectable
+- inventaire avec livre de recette
+- Cycle d'invasions de monstres (jour/nuit) pour passer de phases de farming à pve
+    * farming = cultiver la terre, gestion du temps pour récup de la bouffe
+        manger = vie++
+        faim critique = vie--
+    * enemies tentent de détruire les culture ou le joueur
+- outils : 
+    * hache = récolte bois
+    * pioche = récolte ST
+    * pelle = cultiver
+    * épée = damage cac
+    * arc = damage distance
+- entitées non hostile
+- ressources divisée en 3 types :
+    * pierre
+    * bois
+    * terre
+- nourriture diviséé en 2 types :
+    * plante
+    * viande
 
 Revoir TOUS les fichiers pour :
     laisser uniquement les includes nécessaires
@@ -15,15 +32,15 @@ Graphique : palette + efforts pyxeledit,
 Gameplay cool etc
 
 # Idées de tâches à se répartir
-- Machine à état (FSM)
+- Machine à état (FSM) *(À définir en premier lieu)*
 
 - Système de collisions:  
-    Cirular pour player et enemies ->  collision avec rebond (force normale sur les deux entitées (ajout d'une masse dans les stats?))
-    AABB pour l'environnement -> collisions Circular:AABB avec glissement (force projeté tangeante (amortissement visqueux?))
+    - Cirular pour player et enemies ->  collision avec rebond (force normale sur les deux entitées (ajout d'une masse dans les stats?))
+    - AABB pour l'environnement -> collisions Circular:AABB avec glissement (force projeté tangeante (amortissement visqueux?))
 
 - Système d'inputs  
-    KeyboardTracking component : permet de stocker les touches actives dans un tableau par exemple  
-    InputManager : selon l'objet, réagit aux inputs
+    - KeyboardTracking component : permet de stocker les touches actives dans un tableau par exemple  
+    - InputManager : selon l'objet, réagit aux inputs
 
 - Système de Widgets  
     
@@ -47,32 +64,21 @@ Gameplay cool etc
 
 - Possibilité de sauvegarder et charger les parties
 
-- Propreté du projet  
-    Application des conventions, renommage pour cohérence
-    Commentaires propres
-    
-    Diagrammes UML avec plantUml + intégration dans le README
-        de classes pour décrire tout le system d'ecs
-        de séquence pour décrire le déroulement du jeu
-        d'état pour décrire la fsm
+- Diagrammes UML  
+    - de classes pour décrire tout le system d'ecs
+    - de séquence pour décrire le déroulement du jeu
+    - d'état pour décrire la fsm  
 
-    Rédaction du README.md
-    
-    Maintenance du repo github (important pour le mettre en publique super propre)
-    
-    Debugging avec valgrind/gdb pour checker les memleaks
-    
-    Messages de debug claire, envoyer
-    
-    Licence pour SDL2?
+*Avec plantUml + intégration dans le README*
 
-- Tests
-
-    Boost.Test ??
-    
-- Un logger in game???
-- La DA
-
+- Mise au propre du projet
+    - Rédaction du README.md
+    - Maintenance du repo github (important pour le mettre en publique super propre)
+    - Debugging avec valgrind/gdb pour checker les memleaks
+    - Messages de debug propre *(ajouter un logger in game?)*
+    - Licence pour SDL2?
+    - Tests avec CTest *(Boost.Test ??)*    
+    - Améliorer la DA
 
 # Pour aller loiinnn
 - Statistiques de performances

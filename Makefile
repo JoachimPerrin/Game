@@ -7,7 +7,7 @@ LDFLAGS = -lSDL2 -lSDL2_image -lSDL2_ttf # -lSDL2_net -lSDL2_mixer
 ifeq ($(UNAME_S), Darwin) # macOS
     CXXFLAGS += -I/opt/homebrew/include
     LDFLAGS += -L/opt/homebrew/lib
-else # Linux (Docker)
+else # Linux
     CXXFLAGS += -I/usr/include
     LDFLAGS += -L/usr/lib
 endif

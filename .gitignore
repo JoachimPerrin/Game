@@ -1,9 +1,5 @@
 build/
+docker/
 .vscode/
 .DS_Store
-OrganisationGIT.md
-# Peut-être le mettre dans le github repo?
-docker-compose.yaml
-Dockerfile
-.dockerignore
-Game.code-workspace
+LocalNotes.md
