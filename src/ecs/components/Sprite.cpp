@@ -6,6 +6,12 @@
 
 namespace ecs
 {
+    /**
+     * @brief Construct a new Sprite:: Sprite object
+     *
+     * @param id
+     * @param isAnimated
+     */
     Sprite::Sprite(std::string id, bool isAnimated = false)
         : animated(isAnimated)
     {
@@ -45,6 +51,10 @@ namespace ecs
         SetTexture(id);
     }
 
+    /**
+     * @brief Initialize the Sprite component.
+     *
+     */
     void Sprite::Init()
     {
         transform = &entity->GetComponent<Transform>();
@@ -54,6 +64,10 @@ namespace ecs
                    static_cast<int>(transform->GetSize().y)};
     }
 
+    /**
+     * @brief Update the Sprite component.
+     *
+     */
     void Sprite::Update()
     {
         if (animated)
@@ -67,6 +81,11 @@ namespace ecs
         destRect.h = transform->GetSize().y * transform->GetScale().y;
     }
 
+    /**
+     * @brief Set the Texture object
+     *
+     * @param id The id of the texture to set int the assets manager.
+     */
     void Sprite::SetTexture(std::string id)
     {
         texture = Game::assets->GetTexture(id);
@@ -74,11 +93,20 @@ namespace ecs
             std::cout << "attention, le sprite de " << id << " n'est pas chargé" << std::endl;
     }
 
+    /**
+     * @brief Render the Sprite component.
+     *
+     */
     void Sprite::Render()
     {
         TextureManager::Render(texture, srcRect, destRect, spriteflip);
     }
 
+    /**
+     * @brief Play the animation with the given name.
+     *
+     * @param animName
+     */
     void Sprite::Play(const std::string animName)
     {
         frame = animations[animName].frame;

@@ -39,7 +39,7 @@ namespace ecs
                 Vector2 vec;
                 return vec;
             }
-            // TODO: Logic for collision between two AABBCollider
+            // TODO:Logique de collision entre deux AABBCollider
         }
         else if (CircularCollider *circle = dynamic_cast<CircularCollider *>(&other))
         {

@@ -1,3 +1,13 @@
+/**
+ * @file Transform.hpp
+ * @author Joachim Perrin (joachimperrin1@gmail.com)
+ * @brief This file contains the definition of the Transform class, which is a component that allows entities to have a position, a velocity, a size, a scale, a rotation and a torque.
+ * @version 0.1
+ * @date 2025-02-24
+ *
+ * @copyright Copyright (c) 2025
+ *
+ */
 #ifndef TRANSFORM_HPP
 #define TRANSFORM_HPP
 
@@ -8,6 +18,10 @@
 
 namespace ecs
 {
+    /**
+     * @brief The Transform class is a component that allows entities to have a position, a velocity, a size, a scale, a rotation and a torque.
+     *
+     */
     class Transform : public Component
     {
     public:
