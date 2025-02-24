@@ -4,35 +4,51 @@ Vector2::Vector2() : x(0.0f), y(0.0f) {}
 
 Vector2::Vector2(float x, float y) : x(x), y(y) {}
 
-float Vector2::magnitude() const {
+float Vector2::magnitude() const
+{
     return std::sqrt(x * x + y * y);
 }
 
-Vector2 Vector2::Normalized() const {
+Vector2 Vector2::Normalized() const
+{
     float mag = magnitude();
-    if (mag > 0) {
+    if (mag > 0)
+    {
         return Vector2(x / mag, y / mag);
     }
     return Vector2(0, 0);
 }
 
-Vector2 Vector2::Project(const Vector2 &onto) const {
-    float dotProduct = x * onto.x + y * onto.y;
-    float ontoMagnitudeSquared = onto.x * onto.x + onto.y * onto.y;
-    
-    if (ontoMagnitudeSquared == 0) {
-        return Vector2(0, 0);
-    }
-    
-    float scale = dotProduct / ontoMagnitudeSquared;
-    return Vector2(onto.x * scale, onto.y * scale);
+Vector2 Vector2::Project(const Vector2 vec, const Vector2 onto) const
+{
+    Vector2 num = vec * onto;
+    Vector2 den = onto * onto;
+    if (onto != Vector2(0, 0))
+        return num / den * onto;
+    return Vector2(0, 0);
 }
 
-bool operator==(const Vector2 &vec1, const Vector2 &vec2) {
+Vector2 Vector2::Reflect(const Vector2 v, const Vector2 r)
+{
+    Vector2 denom = r * r;
+    if (denom == Vector2(0, 0))
+        return v; // Évite la division par zéro
+    Vector2 proj = (v * r / denom) * r;
+    return (proj * 2) - v;
+}
+
+Vector2 Vector2::Normal() const
+{
+    return (Vector2(-y, x));
+}
+
+bool operator==(const Vector2 &vec1, const Vector2 &vec2)
+{
     return vec1.x == vec2.x && vec1.y == vec2.y;
 }
 
-bool operator!=(const Vector2 &vec1, const Vector2 &vec2) {
+bool operator!=(const Vector2 &vec1, const Vector2 &vec2)
+{
     return !(vec1 == vec2);
 }
 
@@ -62,12 +78,6 @@ Vector2 &Vector2::divide(const Vector2 &vec)
     x /= vec.x;
     y /= vec.y;
     return *this;
-}
-
-float Vector2::norm(const Vector2 &vec)
-{
-    float norm = std::sqrt(vec.x * vec.x + vec.y * vec.y);
-    return norm;
 }
 
 Vector2 operator+(const Vector2 &vec1, const Vector2 &vec2)
@@ -135,7 +145,25 @@ Vector2 operator*(int scalar, const Vector2 &vec)
 
 Vector2 operator/(const Vector2 &vec1, const Vector2 &vec2)
 {
-    return Vector2(vec1.x / vec2.x, vec1.y / vec2.y);
+    float x;
+    float y;
+    if (vec2.x == 0)
+    {
+        x = 0;
+    }
+    else
+    {
+        x = vec1.x / vec2.x;
+    }
+    if (vec2.y == 0)
+    {
+        y = 0;
+    }
+    else
+    {
+        y = vec1.y / vec2.y;
+    }
+    return Vector2(x, y);
 }
 Vector2 operator/(const Vector2 &vec, float scalar)
 {

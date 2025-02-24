@@ -106,8 +106,9 @@ void PlayingState::Update(Game &game)
     {
         Game::manager.Refresh();
         Game::manager.Update();
-        player.Update();
         collisions->Update(Game::manager);
+        player.Update();
+        
         // Caméra centrée sur le joueur
         camera.x = player.GetComponent<ecs::Transform>().GetPos().x - (Window_W - player.GetComponent<ecs::Transform>().GetSize().x) / 2; // camera.w/2
         camera.y = player.GetComponent<ecs::Transform>().GetPos().y - (Window_H - player.GetComponent<ecs::Transform>().GetSize().y) / 2;
@@ -138,9 +139,9 @@ void PlayingState::Render(Game &game)
         {
             e->Render();
         }
-        for (auto &c : collidables)
-        {
-            c->Render();
-        }
+        // for (auto &c : collidables)
+        // {
+        //     c->Render();
+        // }
     }
 }

@@ -3,9 +3,20 @@
 
 void CollisionManager::GlideCollision(ecs::Entity *entity, Vector2 vec)
 {
+    std::cout << "vec : "<< vec << std::endl;
     if (entity->HasComponent<Transform>())
     {
-        entity->GetComponent<Transform>().SetVel(entity->GetComponent<Transform>().GetVel().Project(vec));
+        std::cout << vec << std::endl;
+        Vector2 normal = vec.Normal();
+        std::cout << normal << std::endl;
+        Vector2 vel = entity->GetComponent<Transform>().GetVel();
+        std::cout << vel << std::endl;
+        std::cout << "Projection  : " <<  vel.Project(vel, vec) << std::endl;
+        if (vel.Project(vel, vec).x * vec.x > 0 || vel.Project(vel, vec).y*vec.y > 0)
+        {
+            std::cout << "Vel :" << vel << "Vel projeté" << vel.Project(vel, normal) <<  std::endl;
+            entity->GetComponent<Transform>().SetVel(vel.Reflect(vel, normal));
+        }
     }
 }
 
@@ -16,11 +27,11 @@ void CollisionManager::ReboundCollision(ecs::Entity *entity, Vector2 vec)
         // Reverse the velocity based on the normal
         if ((vec * Vector2(0.01, 0.01)).magnitude() > 0.3)
         {
-            entity->GetComponent<Transform>().SetVel(vec * Vector2(0.01, 0.01));
+            entity->GetComponent<Transform>().SetVel(vec * Vector2(0.005, 0.005));
         }
         else
         {
-            entity->GetComponent<Transform>().SetVel(Vector2(0,0));
+            entity->GetComponent<Transform>().SetVel(Vector2(0, 0));
         }
     }
 }
@@ -42,6 +53,7 @@ void CollisionManager::Update(ecs::EntitiesManager &EMan)
                 vec = player->GetComponent<CircularCollider>().IsColliding(col->GetComponent<AABBCollider>());
                 if (vec != nullvect)
                 {
+                    std::cout << "Collision" << std::endl;
                     GlideCollision(player, vec);
                 }
             }
@@ -68,17 +80,9 @@ void CollisionManager::Update(ecs::EntitiesManager &EMan)
                     vec = enemy->GetComponent<CircularCollider>().IsColliding(player->GetComponent<CircularCollider>());
                     if (vec != nullvect)
                     {
-                        std::cout << "Colliding" << std::endl;
                         ReboundCollision(enemy, vec);
                     }
-                    std::cout << vec << std::endl;
-                    std::cout << player->GetComponent<CircularCollider>().GetCenter() << std::endl;
                 }
-                else
-                {
-                    std::cout << "No collider" << std::endl;
-                }
-
             }
         }
     }

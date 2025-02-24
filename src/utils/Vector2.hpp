@@ -14,12 +14,11 @@ public:
     Vector2 &subtract(const Vector2 &vec);
     Vector2 &multiply(const Vector2 &vec);
     Vector2 &divide(const Vector2 &vec);
-    float norm(const Vector2 &vec);
-
     float magnitude() const;
     Vector2 Normalized() const;
-    Vector2 Project(const Vector2 &onto) const;
-    Vector2 Normal() const; // New method to calculate the normal vector
+    Vector2 Project(const Vector2 vec,const Vector2 onto) const;
+    Vector2 Normal() const;
+    Vector2 Reflect(const Vector2 v, const Vector2 r);
 
     friend Vector2 operator+(const Vector2 &vec1, const Vector2 &vec2);
     friend Vector2 operator+(const Vector2 &vec, float scalar);

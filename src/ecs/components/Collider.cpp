@@ -76,7 +76,7 @@ namespace ecs
         {
             // AABB vs Circle collision
             Vector2 aabbPos = aabb->transform->GetPos();
-            Vector2 aabbSize = aabb->transform->GetSize();
+            Vector2 aabbSize = aabb->transform->GetSize()*aabb->transform->GetScale();
             
             // Find closest point on AABB to circle
             float closestX = std::max(aabbPos.x, std::min(centerA.x, aabbPos.x + aabbSize.x));
@@ -89,25 +89,18 @@ namespace ecs
             
             // Check if distance is less than radius
             if (distanceSquared < (radius * radius)) {
-                float distance = std::sqrt(distanceSquared);
-                float depth = radius - distance;
-                Vector2 normal = Vector2(dx, dy).Normalized();
-                return normal * depth;
+                return(Vector2(closestX,closestY) - centerA).Normalized();
             }
             return Vector2(0, 0);
         }
         else if (CircularCollider *circle = dynamic_cast<CircularCollider *>(&other))
         {
-            std::cout << "Circle vs Circle collision" << std::endl;
             // Circle vs Circle collision
             Vector2 centerB = circle->GetCenter();
-            std::cout << "Center A: " << centerA << std::endl;
             float dx = centerA.x - centerB.x;
             float dy = centerA.y - centerB.y;
             float distanceSquared = (dx * dx) + (dy * dy);
             float radiusSum = radius + circle->GetRadius();
-            std ::cout << "Distance: " << dx << std::endl;
-            std::cout << "Radius Sum: " << radiusSum*radiusSum << std::endl;
             if (distanceSquared < (radiusSum * radiusSum)) {
                 float distance = std::sqrt(distanceSquared);
                 float depth = radiusSum - distance;
