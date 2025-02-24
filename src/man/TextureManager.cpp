@@ -7,7 +7,7 @@ SDL_Texture *TextureManager::LoadTexture(const std::string imagePath)
 {
     SDL_Surface *tempSurface = nullptr;
     SDL_Texture *newTexture = nullptr;
-    
+
     tempSurface = IMG_Load(imagePath.c_str());
     if (tempSurface == nullptr)
     {

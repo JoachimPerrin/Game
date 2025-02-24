@@ -1,3 +1,13 @@
+/**
+ * @file EntitiesManager.hpp
+ * @author Joachim Perrin (joachimperrin1@gmail.com)
+ * @brief This file contains the definition of the EntitiesManager class, which is responsible for managing all the entities in the ECS logic.
+ * @version 0.1
+ * @date 2025-02-23
+ *
+ * @copyright Copyright (c) 2025
+ *
+ */
 #ifndef ENTITIES_MANAGER_HPP
 #define ENTITIES_MANAGER_HPP
 
@@ -9,6 +19,11 @@ namespace ecs
 {
     class Entity;
 
+    /**
+     * @brief The EntitiesManager is responsible for managing all the entities in the ECS logic.
+     * It contains a list of entities and a list of groups of entities.
+     *
+     */
     class EntitiesManager
     {
     public:

@@ -1,3 +1,13 @@
+/**
+ * @file Sprite.hpp
+ * @author Joachim Perrin (joachimperrin1@gmail.com)
+ * @brief This file contains the definition of the Sprite class, which is a component that allows entities to have a sprite.
+ * @version 0.1
+ * @date 2025-02-24
+ *
+ * @copyright Copyright (c) 2025
+ *
+ */
 #ifndef __SPRITE__
 #define __SPRITE__
 
@@ -9,6 +19,10 @@
 
 namespace ecs
 {
+    /**
+     * @brief The Sprite class is a component that allows entities to have a sprite.
+     *
+     */
     class Sprite : public Component
     {
     public:
