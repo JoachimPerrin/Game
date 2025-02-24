@@ -88,7 +88,6 @@ namespace ecs
      */
     void Sprite::SetTexture(std::string id)
     {
-        std::cout << id << std::endl;
         texture = Game::assets->GetTexture(id);
         if (texture == nullptr)
             std::cout << "attention, le sprite de " << id << " n'est pas chargé" << std::endl;

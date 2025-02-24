@@ -3,6 +3,7 @@
 
 #include "GameState.hpp"
 #include "MapManager.hpp"
+#include "CollisionManager.hpp"
 #include <memory>
 
 class Game;

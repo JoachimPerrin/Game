@@ -1,28 +1,28 @@
 /**
- * @file GOManager.hpp
+ * @file GoManager.hpp
  * @author Joachim Perrin (joachimperrin1@gmail.com)
- * @brief This file contains the definition of the GOManager class, which is a class that manages the creation of game objects.
+ * @brief This file contains the definition of the GoManager class, which is a class that manages the creation of game objects.
  * @version 0.1
  * @date 2025-02-24
  *
  * @copyright Copyright (c) 2025
  *
  */
-#ifndef GOMANAGER__HPP
-#define GOMANAGER__HPP
+#ifndef GoMANAGER__HPP
+#define GoMANAGER__HPP
 
 #include "Vector2.hpp"
 #include "Enemy.hpp"
 #include "Projectile.hpp"
 
 /**
- * @brief The GOManager class is a class that manages the creation of game objects.
+ * @brief The GoManager class is a class that manages the creation of game objects.
  *
  */
-class GOManager
+class GoManager
 {
 public:
-    GOManager(ecs::EntitiesManager *man) : manager(man) {}
+    GoManager(ecs::EntitiesManager *man) : manager(man) {}
 
     void CreatePlayer(ecs::Entity &player);
     void CreateEnemy(Vector2 position, ecs::EnemyType type);

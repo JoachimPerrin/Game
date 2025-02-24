@@ -17,6 +17,7 @@
 
 namespace ecs
 {
+    using Group = std::size_t;
     class Entity;
 
     /**
