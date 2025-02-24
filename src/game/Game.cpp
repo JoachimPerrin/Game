@@ -3,12 +3,14 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_image.h>
 
 #include "Utils.hpp"
 
 SDL_Renderer *Game::renderer = nullptr;
 AssetManager *Game::assets = new AssetManager();
-GOManager *Game::gobjs = new GOManager(&Game::manager);
+GoManager *Game::gobjs = new GoManager(&Game::manager);
 ecs::EntitiesManager Game::manager;
 SDL_Event Game::event;
 
@@ -16,7 +18,7 @@ Game::Game()
     : window(nullptr), running(true)
 {
     InitSDL();
-    InitWindow("I am having fun right now", Window_W, Window_H, SDL_FALSE);
+    InitWindow("I am having SOOO MUCH fun right now !", Window_W, Window_H, SDL_FALSE);
     InitRenderer();
     Initialize();
 }
@@ -72,7 +74,9 @@ void Game::Initialize()
     currentState->Enter(*this);
 
     assets->AddTexture("Robot", "assets/images/ARobot.png");
+    assets->AddTexture("ColMark", "assets/images/ColliderMark.png");
     assets->AddTexture("LobbyTileSet", "assets/images/TSLobby.png");
+    assets->AddTexture("enemy", "assets/images/AEnemies.png");
 }
 
 bool Game::IsRunning() const
@@ -115,7 +119,7 @@ void Game::Render()
 {
     if (currentState)
     {
-        if(SDL_RenderClear(renderer) != 0)
+        if (SDL_RenderClear(renderer) != 0)
         {
             std::cerr << "Echec de nettoyage du rendu: " << SDL_GetError() << std::endl;
             return;
@@ -128,8 +132,8 @@ void Game::Render()
 }
 
 void Game::Cleanup()
-{   
-    if (renderer)
+{
+    if (renderer != nullptr)
     {
         SDL_DestroyRenderer(renderer);
         std::cout << "Rendu détruit" << std::endl;
@@ -141,6 +145,8 @@ void Game::Cleanup()
     }
     TTF_Quit();
     std::cout << "TTF quitté" << std::endl;
+    IMG_Quit();
+    std::cout << "IMG quitté" << std::endl;
     SDL_Quit();
     std::cout << "SDL quittée" << std::endl;
 }
