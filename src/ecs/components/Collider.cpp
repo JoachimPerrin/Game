@@ -6,18 +6,17 @@ namespace ecs
 {
     void Collider::Init()
     {
-
     }
 
-    // TODO: Is there something to update?
     void Collider::Update()
-    {}
+    {
+    }
 
     AABBCollider::AABBCollider(const std::string &t)
     {
         tag = t;
     }
-    
+
     void AABBCollider::Init()
     {
         if (!entity->HasComponent<Transform>())
@@ -32,15 +31,15 @@ namespace ecs
         }
     }
 
-    bool AABBCollider::IsColliding(Collider& other)
+    bool AABBCollider::IsColliding(Collider &other)
     {
-        if (AABBCollider* aabb = dynamic_cast<AABBCollider*>(&other))
+        if (AABBCollider *aabb = dynamic_cast<AABBCollider *>(&other))
         {
             if (aabb->GetWidth() > 0)
                 return false;
             // TODO:Logique de collision entre deux AABBCollider
         }
-        else if (CircularCollider* circle = dynamic_cast<CircularCollider*>(&other))
+        else if (CircularCollider *circle = dynamic_cast<CircularCollider *>(&other))
         {
             if (circle->GetRadius() > 0)
                 return false;
@@ -53,8 +52,8 @@ namespace ecs
     {
         tag = t;
     }
-    
-    void CircularCollider::Init() 
+
+    void CircularCollider::Init()
     {
         if (!entity->HasComponent<Transform>())
         {
@@ -65,15 +64,15 @@ namespace ecs
             radius = std::sqrt(std::pow(transform->GetSize().x, 2) + std::pow(transform->GetSize().y, 2));
     }
 
-    bool CircularCollider::IsColliding(Collider& other)
+    bool CircularCollider::IsColliding(Collider &other)
     {
-        if (AABBCollider* aabb = dynamic_cast<AABBCollider*>(&other))
+        if (AABBCollider *aabb = dynamic_cast<AABBCollider *>(&other))
         {
             if (aabb->GetWidth() > 0)
                 return false;
             // TODO:Logique de collision entre deux AABBCollider
         }
-        else if (CircularCollider* circle = dynamic_cast<CircularCollider*>(&other))
+        else if (CircularCollider *circle = dynamic_cast<CircularCollider *>(&other))
         {
             if (circle->GetRadius() > 0)
                 return false;
