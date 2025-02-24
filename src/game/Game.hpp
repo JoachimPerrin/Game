@@ -9,7 +9,7 @@
 #include "PausedState.hpp"
 #include "MenuState.hpp"
 #include "AssetsManager.hpp"
-#include "GOManager.hpp"
+#include "GoManager.hpp"
 
 const int Window_H = 1200;
 const int Window_W = 1600;
