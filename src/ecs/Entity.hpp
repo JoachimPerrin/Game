@@ -67,7 +67,7 @@ namespace ecs
     class Entity
     {
     public:
-        Entity(EntitiesManager &mManager);
+        Entity(EntitiesManager &eManager);
 
         void Update();
         void Render();
