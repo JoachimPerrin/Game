@@ -1,3 +1,13 @@
+/**
+ * @file AssetsManager.hpp
+ * @author Joachim Perrin (joachimperrin1@gmail.com)
+ * @brief This file contains the definition of the AssetManager class, which is a class that manages the assets of the game.
+ * @version 0.1
+ * @date 2025-02-24
+ *
+ * @copyright Copyright (c) 2025
+ *
+ */
 #ifndef ASSET_MANAGER_HPP
 #define ASSET_MANAGER_HPP
 
@@ -6,7 +16,10 @@
 #include <SDL2/SDL_ttf.h>
 #include "ECS.hpp"
 
-using namespace ecs;
+/**
+ * @brief The AssetManager class is a class that manages the assets of the game.
+ *
+ */
 class AssetManager
 {
 public:

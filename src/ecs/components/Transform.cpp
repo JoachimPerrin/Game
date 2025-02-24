@@ -4,11 +4,14 @@
 namespace ecs
 {
     Transform::Transform()
-     : position({0.0f, 0.0f}), velocity({0.0f, 0.0f}), size({1.0f, 1.0f}), scale({1.0f, 1.0f}), rotation(0.0f), torque(0.0f) 
-    {}
+        : position({0.0f, 0.0f}), velocity({0.0f, 0.0f}), size({1.0f, 1.0f}), scale({1.0f, 1.0f}), rotation(0.0f), torque(0.0f)
+    {
+    }
+
     Transform::Transform(Vector2 pos, Vector2 vel, Vector2 siz, Vector2 sca, float rot, float tor)
-     : position(pos), velocity(vel), size(siz), scale(sca), rotation(rot), torque(tor)
-    {}
+        : position(pos), velocity(vel), size(siz), scale(sca), rotation(rot), torque(tor)
+    {
+    }
 
     Vector2 Transform::GetPos() const { return position; }
     Vector2 Transform::GetVel() const { return velocity; }
@@ -28,7 +31,7 @@ namespace ecs
     void Transform::Update()
     {
         int speed = 1;
-        if(entity->HasComponent<Stat>())
+        if (entity->HasComponent<Stat>())
         {
             speed += entity->GetComponent<Stat>().GetSpeed();
         }
