@@ -12,6 +12,7 @@ auto &player(Game::manager.AddEntity());
 auto &enemy(Game::manager.GetGroup(Game::enemies));
 auto &tiles(Game::manager.GetGroup(Game::maps));
 auto &collidables(Game::manager.GetGroup(Game::collidable));
+auto &projectiles(Game::manager.GetGroup(Game::projectiles));
 
 PlayingState::PlayingState()
 {
@@ -139,6 +140,11 @@ void PlayingState::Render(Game &game)
         {
             e->Render();
         }
+        for (auto& p: projectiles)
+        {
+            p->Render();
+        }
+        
         // for (auto &c : collidables)
         // {
         //     c->Render();

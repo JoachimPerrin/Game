@@ -86,24 +86,24 @@ namespace ecs
             sprite->Play("Idle");
 
         // Gestion du tir
-        // if (keystates[SDL_SCANCODE_L] && entity->GetComponent<Stat>().IsShotReady())
-        // {
-        //     if (transform->velocity.x == 0 && transform->velocity.y == 0) // puisque je définit le projectile en fonction de la vitesse du perso, il faut que je couvre le cas ou il est immobile
-        //                                                                   // + transform->height / 2 * transform->scale.y
-        //                                                                   // + (1 * 8 + transform->width / 2) * transform->scale.x
-        //         Game::gobjs->CreateProjectile(Vector2(transform->position.x, transform->position.y), 
-        //                                        Vector2(2, 0),
-        //                                        1000, 2, entity->GetComponent<Stat>().GetWeapon());
-        //     else
-        //         Game::gobjs->CreateProjectile(Vector2(transform->position.x,  // + (transform->velocity.x * 8 + transform->width/2) * transform->scale,
-        //                                                transform->position.y), // + (transform->velocity.y * 8 + transform->height/2) * transform->scale),
-        //                                        Vector2(transform->velocity.x * 2,
-        //                                                transform->velocity.y * 2),
-        //                                        1000, 2, entity->GetComponent<Stat>().GetWeapon());
-        //     entity->GetComponent<Stat>().SetLastShot();
+        if (keystates[SDL_SCANCODE_L] && entity->GetComponent<Stat>().IsShotReady())
+        {
+            if (transform->velocity.x == 0 && transform->velocity.y == 0) // puisque je définit le projectile en fonction de la vitesse du perso, il faut que je couvre le cas ou il est immobile
+                                                                          // + transform->height / 2 * transform->scale.y
+                                                                          // + (1 * 8 + transform->width / 2) * transform->scale.x
+                Game::gobjs->CreateProjectile(Vector2(transform->position.x, transform->position.y), 
+                                               Vector2(20, 0),
+                                               10000, 2, entity->GetComponent<Stat>().GetWeapon());
+            else
+                Game::gobjs->CreateProjectile(Vector2(transform->position.x,  // + (transform->velocity.x * 8 + transform->width/2) * transform->scale,
+                                                       transform->position.y), // + (transform->velocity.y * 8 + transform->height/2) * transform->scale),
+                                               Vector2(transform->velocity.x * 20,
+                                                       transform->velocity.y * 20),
+                                               1000, 2, entity->GetComponent<Stat>().GetWeapon());
+            entity->GetComponent<Stat>().SetLastShot();
 
-        //     // sprite->play("Shoot"); // pas encore animé MDRRRRLOOLOLL
-        // }
+            // sprite->play("Shoot"); // pas encore animé MDRRRRLOOLOLL
+        }
 
         // changement d'arme
         if (keystates[SDL_SCANCODE_K] && SDL_GetTicks() - lastAction > actionDelay)
