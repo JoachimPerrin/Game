@@ -77,6 +77,7 @@ void Game::Initialize()
     assets->AddTexture("ColMark", "assets/images/ColliderMark.png");
     assets->AddTexture("LobbyTileSet", "assets/images/TSLobby.png");
     assets->AddTexture("enemy", "assets/images/AEnemies.png");
+    assets->AddTexture("projectile", "assets/images/AProjectiles.png");
 }
 
 bool Game::IsRunning() const

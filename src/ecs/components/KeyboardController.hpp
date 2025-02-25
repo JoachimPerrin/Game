@@ -15,7 +15,6 @@ namespace ecs
         unsigned int lastAction = SDL_GetTicks();
         unsigned int actionDelay = 500;
         const Uint8 *keystates = SDL_GetKeyboardState(NULL);
-
         void Init() override;
         void Update() override;
 
@@ -23,6 +22,7 @@ namespace ecs
         Transform *transform;
         Sprite *sprite;
         Stat *stat;
+        int dir;
     };
 }
 #endif

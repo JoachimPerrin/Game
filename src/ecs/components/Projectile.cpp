@@ -14,6 +14,7 @@ namespace ecs
     {
         transform = &entity->GetComponent<Transform>();
         transform->velocity = velocity;
+        distance = 0;
     }
 
     void Projectile::Update()
