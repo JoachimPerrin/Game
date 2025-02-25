@@ -7,12 +7,12 @@
 SDL_Rect PlayingState::camera = {0, 0, Window_W, Window_H};
 MapManager *PlayingState::mapManager = new MapManager();
 CollisionManager *collisions = new CollisionManager();
-auto &player(Game::manager.AddEntity());
-
+auto &players(Game::manager.GetGroup(Game::players));
 auto &enemy(Game::manager.GetGroup(Game::enemies));
 auto &tiles(Game::manager.GetGroup(Game::maps));
 auto &collidables(Game::manager.GetGroup(Game::collidable));
 auto &projectiles(Game::manager.GetGroup(Game::projectiles));
+ecs::Entity *Player;
 
 PlayingState::PlayingState()
 {
@@ -20,13 +20,15 @@ PlayingState::PlayingState()
               << std::endl;
     mapManager->AddMap("LobbyMap", "assets/maps/TMLobby.txt", 25, 20);
     std::cout << "\nmap ajouté" << std::endl;
+    mapManager->LoadMap("LobbyMap", "LobbyTileSet");
     // TODO: bien faire les initialisations nécessaire ici
 }
 
 PlayingState::~PlayingState()
 {
-    mapManager->~MapManager();
-    // TODO: bien clean les potentielles var malpropre ici
+    Game::manager.ClearEntities(-1);
+    delete mapManager;
+    delete collisions;
     std::cout << "score : " << score << std::endl
               << "Destroying Playing state" << std::endl;
 }
@@ -34,14 +36,10 @@ PlayingState::~PlayingState()
 void PlayingState::Enter(Game &game)
 {
     // TODO: quelques initialisation devraient peut-être apparaître ici
-    std::cout << "Entering Playing State" << std::endl;
     if (game.IsRunning())
     {
-        std::cout << "load de la map\n"
-                  << std::endl;
-        mapManager->LoadMap("LobbyMap", "LobbyTileSet");
-        std::cout << "\nmap loaded" << std::endl;
-        Game::gobjs->CreatePlayer(player);
+        std::cout << "Entering Playing State" << std::endl;
+        Player = Game::gobjs->CreatePlayer();
         Game::gobjs->CreateEnemy(Vector2(400.0f, 600.0f), ecs::spider);
     }
 }
@@ -49,8 +47,10 @@ void PlayingState::Enter(Game &game)
 void PlayingState::Exit(Game &game)
 {
     // TODO: sûrement des trucs à faire ici aussi
+    Game::manager.ClearEntities(Game::players);
+    Game::manager.ClearEntities(Game::enemies);
+    Game::manager.ClearEntities(Game::projectiles);
     std::cout << "Exiting Playing State" << std::endl;
-    Game::manager.ClearEntities();
     if (game.IsRunning())
         return;
 }
@@ -109,18 +109,18 @@ void PlayingState::Update(Game &game)
         Game::manager.Refresh();
         Game::manager.Update();
         collisions->Update(Game::manager);
-        if (!player.IsActive())
+        if (!Player->IsActive())
         {
             game.ChangeState(game.playingState);
         }
         else
         {
-            player.Update();
+            Player->Update();
         }
 
         // Caméra centrée sur le joueur
-        camera.x = player.GetComponent<ecs::Transform>().GetPos().x - (Window_W - player.GetComponent<ecs::Transform>().GetSize().x) / 2; // camera.w/2
-        camera.y = player.GetComponent<ecs::Transform>().GetPos().y - (Window_H - player.GetComponent<ecs::Transform>().GetSize().y) / 2;
+        camera.x = Player->GetComponent<ecs::Transform>().GetPos().x - (Window_W - Player->GetComponent<ecs::Transform>().GetSize().x) / 2; // camera.w/2
+        camera.y = Player->GetComponent<ecs::Transform>().GetPos().y - (Window_H - Player->GetComponent<ecs::Transform>().GetSize().y) / 2;
 
         // Caméra limitée par la bordure de la map
         if (camera.x < 0)
@@ -143,7 +143,10 @@ void PlayingState::Render(Game &game)
         {
             t->Render();
         }
-        player.Render();
+        for (auto &p : players)
+        {
+            p->Render();
+        }
         for (auto &e : enemy)
         {
             e->Render();

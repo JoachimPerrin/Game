@@ -12,19 +12,13 @@ namespace ecs
         transform = &entity->GetComponent<Transform>();
         stat = &entity->GetComponent<Stat>();
         sprite = &entity->GetComponent<Sprite>();
+        dir = 0; // Initialize dir to a default value
     }
 
     void KeyboardController::Update()
     {
-        transform->velocity.x = 0;
-        transform->velocity.y = 0;
-        // sprite->spriteflip = SDL_FLIP_NONE;
-
-        // if (keystates[SDL_SCANCODE_ESCAPE])
-        // {
-        //     Game::isRunning = false;
-        //     return;
-        // }
+        transform->velocity.x = 0.0;
+        transform->velocity.y = 0.0;
 
         if (Game::event.type == SDL_KEYDOWN && Game::event.key.keysym.sym == SDLK_j)
         {
@@ -39,12 +33,12 @@ namespace ecs
         if (keystates[SDL_SCANCODE_W])
         { // Z -> haut
             dir = 2;
-            transform->velocity.y = -1;
+            transform->velocity.y = -1.0;
         }
         if (keystates[SDL_SCANCODE_S])
         { // S -> bas
             dir = 3;
-            transform->velocity.y = 1;
+            transform->velocity.y = 1.0;
         }
         if (keystates[SDL_SCANCODE_D])
         { // D -> droite
@@ -61,7 +55,7 @@ namespace ecs
                 transform->velocity.y = 0.7;
             }
             else
-                transform->velocity.x = 1;
+                transform->velocity.x = 1.0;
         }
         if (keystates[SDL_SCANCODE_A])
         { // Q -> gauche
@@ -78,7 +72,7 @@ namespace ecs
                 transform->velocity.y = 0.7;
             }
             else
-                transform->velocity.x = -1;
+                transform->velocity.x = -1.0;
         }
 
         // Gestion du choix de l'animation
@@ -93,40 +87,40 @@ namespace ecs
         // Gestion du tir
         if (keystates[SDL_SCANCODE_L] && entity->GetComponent<Stat>().IsShotReady())
         {
-            if (transform->velocity.x == 0 && transform->velocity.y == 0)
+            if (transform->velocity.x == 0.0 && transform->velocity.y == 0.0)
             { // puisque je définit le projectile en fonction de la vitesse du perso, il faut que je couvre le cas ou il est immobile
               // + transform->height / 2 * transform->scale.y
               // + (1 * 8 + transform->width / 2) * transform->scale.x
                 if (dir == 0)
                 {
                     Game::gobjs->CreateProjectile(Vector2(transform->position.x, transform->position.y),
-                                                  Vector2(20, 0),
+                                                  Vector2(20.0, 0.0),
                                                   10000, 2, entity->GetComponent<Stat>().GetWeapon());
                 }
                 else if(dir == 1)
                 {
                     Game::gobjs->CreateProjectile(Vector2(transform->position.x, transform->position.y),
-                    Vector2(-20, 0),
+                    Vector2(-20.0, 0.0),
                     10000, 2, entity->GetComponent<Stat>().GetWeapon()); 
                 }
                 else if (dir == 2)
                 {
                     Game::gobjs->CreateProjectile(Vector2(transform->position.x, transform->position.y),
-                    Vector2(0, -20),
+                    Vector2(0.0, -20.0),
                     10000, 2, entity->GetComponent<Stat>().GetWeapon());
                 }
                 else if (dir == 3)
                 {
                     Game::gobjs->CreateProjectile(Vector2(transform->position.x, transform->position.y),
-                    Vector2(0, 20),
+                    Vector2(0.0, 20.0),
                     10000, 2, entity->GetComponent<Stat>().GetWeapon());
                 }
             }
             else
                 Game::gobjs->CreateProjectile(Vector2(transform->position.x,  // + (transform->velocity.x * 8 + transform->width/2) * transform->scale,
                                                       transform->position.y), // + (transform->velocity.y * 8 + transform->height/2) * transform->scale),
-                                              Vector2(transform->velocity.x * 20,
-                                                      transform->velocity.y * 20),
+                                              Vector2(transform->velocity.x * 20.0,
+                                                      transform->velocity.y * 20.0),
                                               10000, 2, entity->GetComponent<Stat>().GetWeapon());
             entity->GetComponent<Stat>().SetLastShot();
 
@@ -140,13 +134,5 @@ namespace ecs
             entity->GetComponent<Stat>().ChangeWeapon();
             lastAction = SDL_GetTicks();
         }
-
-        // spawn d'araignée et chauve-souris
-        // if (keystates[SDL_SCANCODE_SEMICOLON] && SDL_GetTicks() - lastAction > actionDelay)
-        // {
-        //     std::cout << "spawn enemies" << std::endl;
-        //     Game::gobjs->CreateEnemy(transform->position, spider);
-        //     lastAction = SDL_GetTicks();
-        // }
     }
 }

@@ -117,6 +117,35 @@ void CollisionManager::Update(ecs::EntitiesManager &EMan)
                     }
                 }
             }
+            // for (auto &col : colidable)
+            // {
+            //     if (projectile->HasComponent<ecs::CircularCollider>() && col->HasComponent<ecs::AABBCollider>())
+            //     {
+            //         vec = projectile->GetComponent<ecs::CircularCollider>().IsColliding(col->GetComponent<ecs::AABBCollider>());
+            //         if (vec != nullvect)
+            //         {
+            //             projectile->Destroy();
+            //         }
+            //     }
+            // }
+        }
+        for (auto &projectile : projectiles)
+        {
+            for (auto &enemy : enemies)
+            {
+                if (projectile->HasComponent<ecs::CircularCollider>() && enemy->HasComponent<ecs::CircularCollider>())
+                {
+                    vec = projectile->GetComponent<ecs::CircularCollider>().IsColliding(enemy->GetComponent<ecs::CircularCollider>());
+                    if (vec != nullvect)
+                    {
+                        projectile->Destroy();
+                        if (enemy->HasComponent<ecs::Stat>())
+                        {
+                            enemy->GetComponent<ecs::Stat>().Hurt(10);
+                        }
+                    }
+                }
+            }
             for (auto &col : colidable)
             {
                 if (projectile->HasComponent<ecs::CircularCollider>() && col->HasComponent<ecs::AABBCollider>())

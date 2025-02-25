@@ -66,18 +66,17 @@ void Game::InitRenderer()
 
 void Game::Initialize()
 {
+    assets->AddTexture("Robot", "assets/images/ARobot.png");
+    assets->AddTexture("ColMark", "assets/images/ColliderMark.png");
+    assets->AddTexture("LobbyTileSet", "assets/images/TSLobby.png");
+    assets->AddTexture("enemy", "assets/images/AEnemies.png");
+    assets->AddTexture("projectile", "assets/images/AProjectiles.png");
     menuState = std::make_unique<MenuState>();
     playingState = std::make_unique<PlayingState>();
     pausedState = std::make_unique<PausedState>();
 
     currentState = menuState;
     currentState->Enter(*this);
-
-    assets->AddTexture("Robot", "assets/images/ARobot.png");
-    assets->AddTexture("ColMark", "assets/images/ColliderMark.png");
-    assets->AddTexture("LobbyTileSet", "assets/images/TSLobby.png");
-    assets->AddTexture("enemy", "assets/images/AEnemies.png");
-    assets->AddTexture("projectile", "assets/images/AProjectiles.png");
 }
 
 bool Game::IsRunning() const
@@ -134,11 +133,13 @@ void Game::Render()
 
 void Game::Cleanup()
 {
-    if (renderer != nullptr)
-    {
-        SDL_DestroyRenderer(renderer);
-        std::cout << "Rendu détruit" << std::endl;
-    }
+    // Cleanup dynamically allocated resources
+    // if (renderer != nullptr)
+    // {
+    //     SDL_DestroyRenderer(renderer);
+    //     std::cout << "Rendu détruit" << std::endl;
+    // }
+    assets->ClearTextures();
     if (window)
     {
         SDL_DestroyWindow(window);

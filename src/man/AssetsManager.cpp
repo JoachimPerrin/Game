@@ -31,6 +31,24 @@ AssetManager::~AssetManager()
     fonts.clear();
 }
 
+void AssetManager::ClearTextures()
+{
+    for (auto &pair : textures)
+    {
+        std::cout << "Libération de la texture " << pair.first << std::endl;
+        SDL_Texture *texture = pair.second;
+        SDL_DestroyTexture(texture);
+    }
+    textures.clear();
+    for (auto &pair : fonts)
+    {
+        std::cout << "Libération de la police " << pair.first << std::endl;
+        TTF_Font *font = pair.second;
+        TTF_CloseFont(font);
+    }
+    fonts.clear();
+}
+
 /**
  * @brief Add a texture to the asset manager
  *

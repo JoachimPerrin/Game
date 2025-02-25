@@ -2,6 +2,7 @@
 #include "ECS.hpp"
 
 #include <algorithm>
+#include "Game.hpp"
 
 namespace ecs
 {
@@ -12,7 +13,10 @@ namespace ecs
     void EntitiesManager::Update()
     {
         for (auto &e : entities)
-            e->Update();
+            if (e)
+            {
+                e->Update();
+            }
     }
 
     /**
@@ -22,7 +26,10 @@ namespace ecs
     void EntitiesManager::Render()
     {
         for (auto &e : entities)
-            e->Render();
+            if (e)
+            {
+                e->Render();
+            }
     }
 
     /**
@@ -89,11 +96,21 @@ namespace ecs
      * @brief Clear all the entities.
      *
      */
-    void EntitiesManager::ClearEntities()
+    void EntitiesManager::ClearEntities(int mGroup)
     {
-        for (auto &e : entities)
+        if (mGroup == -1)
         {
-            e->Destroy();
+            for (auto &e : entities)
+            {
+                e->Destroy();
+            }
+        }
+        else
+        {
+            for (auto &e : groupedEntities[mGroup])
+            {
+                e->Destroy();
+            }
         }
         Refresh();
     }
