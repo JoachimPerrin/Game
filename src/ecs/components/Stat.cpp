@@ -28,6 +28,14 @@ namespace ecs
             weapon = allyProjectile;
         }
     }
+    void Stat::Update()
+    {
+        if (hp <= 0)
+        {
+            entity->Destroy();
+        }
+        
+    }
 
     ProjectileType Stat::GetWeapon() { return weapon; }
     int Stat::GetHP() { return hp; }

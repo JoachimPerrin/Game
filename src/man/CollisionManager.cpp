@@ -36,11 +36,20 @@ void CollisionManager::ReboundCollision(ecs::Entity *entity, Vector2 vec)
     }
 }
 
+void CollisionManager::ProjectileCollision(ecs::Entity *entity)
+{
+    if (entity->HasComponent<ecs::Stat>())
+    {
+        entity->Destroy();
+    }
+}
+
 void CollisionManager::Update(ecs::EntitiesManager &EMan)
 {
     std::vector<ecs::Entity *> colidable = EMan.GetGroup(Game::collidable);
     std::vector<ecs::Entity *> players = EMan.GetGroup(Game::players);
     std::vector<ecs::Entity *> enemies = EMan.GetGroup(Game::enemies);
+    std::vector<ecs::Entity *> projectiles = EMan.GetGroup(Game::projectiles);
     Vector2 nullvect = Vector2(0, 0);
     Vector2 vec;
 
@@ -83,6 +92,39 @@ void CollisionManager::Update(ecs::EntitiesManager &EMan)
                     if (vec != nullvect)
                     {
                         ReboundCollision(enemy, vec);
+                        if (player->HasComponent<ecs::Stat>())
+                        {
+                            player->GetComponent<ecs::Stat>().Hurt(1);
+                        }
+                    }
+                }
+            }
+        }
+        for (auto &projectile : projectiles)
+        {
+            for (auto &enemy : enemies)
+            {
+                if (projectile->HasComponent<ecs::CircularCollider>() && enemy->HasComponent<ecs::CircularCollider>())
+                {
+                    vec = projectile->GetComponent<ecs::CircularCollider>().IsColliding(enemy->GetComponent<ecs::CircularCollider>());
+                    if (vec != nullvect)
+                    {
+                        projectile->Destroy();
+                        if (enemy->HasComponent<ecs::Stat>())
+                        {
+                            enemy->GetComponent<ecs::Stat>().Hurt(10);
+                        }
+                    }
+                }
+            }
+            for (auto &col : colidable)
+            {
+                if (projectile->HasComponent<ecs::CircularCollider>() && col->HasComponent<ecs::AABBCollider>())
+                {
+                    vec = projectile->GetComponent<ecs::CircularCollider>().IsColliding(col->GetComponent<ecs::AABBCollider>());
+                    if (vec != nullvect)
+                    {
+                        projectile->Destroy();
                     }
                 }
             }

@@ -12,6 +12,7 @@ auto &player(Game::manager.AddEntity());
 auto &enemy(Game::manager.GetGroup(Game::enemies));
 auto &tiles(Game::manager.GetGroup(Game::maps));
 auto &collidables(Game::manager.GetGroup(Game::collidable));
+auto &projectiles(Game::manager.GetGroup(Game::projectiles));
 
 PlayingState::PlayingState()
 {
@@ -41,7 +42,7 @@ void PlayingState::Enter(Game &game)
         mapManager->LoadMap("LobbyMap", "LobbyTileSet");
         std::cout << "\nmap loaded" << std::endl;
         Game::gobjs->CreatePlayer(player);
-        Game::gobjs->CreateEnemy(Vector2(400.0f, 600.0f), ecs::bat);
+        Game::gobjs->CreateEnemy(Vector2(400.0f, 600.0f), ecs::spider);
     }
 }
 
@@ -49,6 +50,7 @@ void PlayingState::Exit(Game &game)
 {
     // TODO: sûrement des trucs à faire ici aussi
     std::cout << "Exiting Playing State" << std::endl;
+    Game::manager.ClearEntities();
     if (game.IsRunning())
         return;
 }
@@ -107,8 +109,15 @@ void PlayingState::Update(Game &game)
         Game::manager.Refresh();
         Game::manager.Update();
         collisions->Update(Game::manager);
-        player.Update();
-        
+        if (!player.IsActive())
+        {
+            game.ChangeState(game.playingState);
+        }
+        else
+        {
+            player.Update();
+        }
+
         // Caméra centrée sur le joueur
         camera.x = player.GetComponent<ecs::Transform>().GetPos().x - (Window_W - player.GetComponent<ecs::Transform>().GetSize().x) / 2; // camera.w/2
         camera.y = player.GetComponent<ecs::Transform>().GetPos().y - (Window_H - player.GetComponent<ecs::Transform>().GetSize().y) / 2;
@@ -139,6 +148,11 @@ void PlayingState::Render(Game &game)
         {
             e->Render();
         }
+        for (auto &p : projectiles)
+        {
+            p->Render();
+        }
+
         // for (auto &c : collidables)
         // {
         //     c->Render();

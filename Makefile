@@ -2,7 +2,7 @@ UNAME_S := $(shell uname -s)
 
 CXX = g++
 CXXFLAGS = -Wall -Werror -Wextra -g -std=c++17 -Isrc/ecs/components -Isrc/game -Isrc/man -Isrc/ecs -Isrc/game/game_states -Isrc/utils
-LDFLAGS = -lSDL2 -lSDL2_image -lSDL2_ttf # -lSDL2_net -lSDL2_mixer
+LDFLAGS = -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer # -lSDL2_net 
 
 ifeq ($(UNAME_S), Darwin) # macOS
     CXXFLAGS += -I/opt/homebrew/include

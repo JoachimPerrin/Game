@@ -17,6 +17,7 @@
 #include "Entity.hpp"
 #include "Game.hpp"
 #include "PlayingState.hpp"
+#include "Stat.hpp"
 
 class CollisionManager
 {
@@ -24,5 +25,6 @@ public:
     void Update(ecs::EntitiesManager &EMan);
     void ReboundCollision(ecs::Entity *entity, Vector2 vec);
     void GlideCollision(ecs::Entity *entity, Vector2 vec);
+    void ProjectileCollision(ecs::Entity *entity);
 };
 #endif
