@@ -38,7 +38,7 @@ void MapManager::LoadMap(std::string tileMapID, std::string tileSetID)
 /*je veux ajouter un vecteur de coordonnées d'enemis, avec une fonction spawnEnemies qui parcours et créé les entités après avoir clear*/
 void MapManager::ChangeMap(std::string newMapID, std::string newSetID)
 {
-    Game::manager.ClearEntities();
+    Game::manager.ClearEntities(-1);
     // SpawnEnemies( enemyType, );
     LoadMap(newMapID, newSetID);
 }

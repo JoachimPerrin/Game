@@ -36,7 +36,7 @@ namespace ecs
         std::vector<Entity *> &GetGroup(Group mGroup);
 
         Entity &AddEntity();
-        void ClearEntities();
+        void ClearEntities(int mGroup);
 
     private:
         std::vector<std::unique_ptr<Entity>> entities;

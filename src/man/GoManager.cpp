@@ -8,14 +8,16 @@
 #include "Label.hpp"
 #include "KeyboardController.hpp"
 
-void GoManager::CreatePlayer(ecs::Entity &player)
+ecs::Entity * GoManager::CreatePlayer()
 {
+    auto& player(Game::manager.AddEntity());
     player.AddComponent<ecs::Transform>(Vector2(500.0f, 700.0f), Vector2(0.0f, 0.0f), Vector2(32.0f, 32.0f), Vector2(3.0f, 3.0f));
     player.AddComponent<ecs::Sprite>("Robot", true);
     player.AddComponent<ecs::KeyboardController>();
     player.AddComponent<ecs::Stat>();
     player.AddComponent<ecs::CircularCollider>("Robot");
     player.AddGroup(Game::players);
+    return &player;
 }
 
 void GoManager::CreateProjectile(Vector2 position, Vector2 velocity, int range, int speed, ecs::ProjectileType type)
