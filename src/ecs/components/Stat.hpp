@@ -19,6 +19,7 @@ namespace ecs
         int GetSpeed();
         void Hurt(int damage);
         void Healed(int heal);
+        void Update();
 
         friend class KeyboardController;
 
