@@ -106,17 +106,17 @@ void PlayingState::Update(Game &game)
     // TODO: ajouter la logique d'update ici
     if (game.IsRunning())
     {
+        collisions->Update(Game::manager);
         Game::manager.Refresh();
         Game::manager.Update();
-        collisions->Update(Game::manager);
         if (!Player->IsActive())
         {
             game.ChangeState(game.playingState);
         }
-        else
-        {
-            Player->Update();
-        }
+        // else
+        // {
+        //     Player->Update();
+        // }
 
         // Caméra centrée sur le joueur
         camera.x = Player->GetComponent<ecs::Transform>().GetPos().x - (Window_W - Player->GetComponent<ecs::Transform>().GetSize().x) / 2; // camera.w/2

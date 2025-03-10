@@ -15,7 +15,7 @@ void CollisionManager::GlideCollision(ecs::Entity *entity, Vector2 vec)
         if (vel.Project(vel, vec).x * vec.x > 0 || vel.Project(vel, vec).y * vec.y > 0)
         {
             // std::cout << "Vel :" << vel << "Vel projeté" << vel.Project(vel, normal) << std::endl;
-            entity->GetComponent<ecs::Transform>().SetVel(vel.Reflect(vel, normal));
+            entity->GetComponent<ecs::Transform>().SetVel(vel.Project(vel, normal));
         }
     }
 }
@@ -25,14 +25,14 @@ void CollisionManager::ReboundCollision(ecs::Entity *entity, Vector2 vec)
     if (entity->HasComponent<ecs::Transform>())
     {
         // Reverse the velocity based on the normal
-        if ((vec * Vector2(0.01, 0.01)).magnitude() > 0.3)
+        if ((vec * Vector2(0.01, 0.01)).magnitude() > 0.4)
         {
             entity->GetComponent<ecs::Transform>().SetVel(vec * Vector2(0.005, 0.005));
         }
-        else
-        {
-            entity->GetComponent<ecs::Transform>().SetVel(Vector2(0, 0));
-        }
+        // else
+        // {
+        //     entity->GetComponent<ecs::Transform>().SetVel(Vector2(0, 0));
+        // }
     }
 }
 
@@ -94,7 +94,7 @@ void CollisionManager::Update(ecs::EntitiesManager &EMan)
                         ReboundCollision(enemy, vec);
                         if (player->HasComponent<ecs::Stat>())
                         {
-                            player->GetComponent<ecs::Stat>().Hurt(1);
+                            // player->GetComponent<ecs::Stat>().Hurt(1);
                         }
                     }
                 }
