@@ -14,6 +14,7 @@
 #include "Vector2.hpp"
 #include "Enemy.hpp"
 #include "Projectile.hpp"
+#include <array>
 
 /**
  * @brief The GoManager class is a class that manages the creation of game objects.

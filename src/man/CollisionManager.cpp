@@ -1,4 +1,5 @@
 #include "CollisionManager.hpp"
+#include "ComponentManager.hpp"
 #include "Game.hpp"
 
 void CollisionManager::GlideCollision(ecs::Entity *entity, Vector2 vec)
@@ -15,7 +16,8 @@ void CollisionManager::GlideCollision(ecs::Entity *entity, Vector2 vec)
         if (vel.Project(vel, vec).x * vec.x > 0 || vel.Project(vel, vec).y * vec.y > 0)
         {
             // std::cout << "Vel :" << vel << "Vel projeté" << vel.Project(vel, normal) << std::endl;
-            entity->GetComponent<ecs::Transform>().SetVel(vel.Project(vel, normal));
+            ecs::ComponentManager::EntitySetVelocity(*entity, vel.Project(vel, normal));
+            // entity->GetComponent<ecs::Transform>().SetVel(vel.Project(vel, normal));
         }
     }
 }
@@ -27,6 +29,7 @@ void CollisionManager::ReboundCollision(ecs::Entity *entity, Vector2 vec)
         // Reverse the velocity based on the normal
         if ((vec * Vector2(0.01, 0.01)).magnitude() > 0.3)
         {
+            //TODO: ComponentManager
             entity->GetComponent<ecs::Transform>().SetVel(vec * Vector2(0.005, 0.005));
         }
         // else
@@ -64,6 +67,7 @@ void CollisionManager::Update(ecs::EntitiesManager &EMan)
                 vec = player->GetComponent<ecs::CircularCollider>().IsColliding(col->GetComponent<ecs::AABBCollider>());
                 if (vec != nullvect)
                 {
+
                     // std::cout << "Collision" << std::endl;
                     GlideCollision(player, vec);
                 }

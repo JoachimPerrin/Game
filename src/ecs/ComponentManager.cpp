@@ -68,9 +68,11 @@ namespace ecs {
     }
 
     void ComponentManager::JoueurStopMouvement(Entity &entity){
-
-        auto& transform = entity.GetComponent<Transform>();
-        transform.SetVel(Vector2(0, 0));
+        
+        if (entity.HasComponent<ecs::Transform>()) {
+            auto& transform = entity.GetComponent<Transform>();
+            transform.SetVel(Vector2(0, 0));
+        }
         // Autres actions liées à l'état "Stoppé"
     }
 
@@ -82,6 +84,16 @@ namespace ecs {
     void ComponentManager::InventaireClose(Entity &entity){
         JoueurStopMouvement(entity);
         printf("Inventaire closed\n");
+    }
+
+    void ComponentManager::EntitySetVelocity(Entity &entity, Vector2 velocity){
+        if (entity.HasComponent<ecs::Transform>()) {
+            auto& transform = entity.GetComponent<Transform>();
+
+            Vector2 vel = transform.GetVel();
+            std::cout << "Velocity: " << vel << std::endl;
+            transform.SetVel(velocity);
+        }
     }
 
 }

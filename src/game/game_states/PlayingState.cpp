@@ -135,9 +135,9 @@ void PlayingState::HandleEvent(Game &game)
 bool PlayingState::Execute(const PlayingActions action){
 
     // Conditions
-    if(!player.HasComponent<ecs::FSM<PlayerState, PlayerInput, 3, 3>>()) return false;
+    if(!Player->HasComponent<ecs::FSM<PlayerState, PlayerInput, nbPlayerStates, nbPlayerInputs>>()) return false;
     
-    auto &playerFSM = player.GetComponent<ecs::FSM<PlayerState, PlayerInput, 3, 3>>();
+    auto &playerFSM = Player->GetComponent<ecs::FSM<PlayerState, PlayerInput, nbPlayerStates, nbPlayerInputs>>();
 
     switch(action){
         case A_NONE:
@@ -178,8 +178,10 @@ void PlayingState::Update(Game &game)
     //TODO: ajouter la logique d'update ici
     if (game.IsRunning())
     {
+        collisions->Update(Game::manager);
         Game::manager.Refresh();
         Game::manager.Update();
+        
 
         if (!Player->IsActive())
         {
@@ -191,8 +193,8 @@ void PlayingState::Update(Game &game)
         // }
 
         // Caméra centrée sur le joueur
-        camera.x = player.GetComponent<ecs::Transform>().GetPos().x - (Window_W - player.GetComponent<ecs::Transform>().GetSize().x) / 2; // camera.w/2
-        camera.y = player.GetComponent<ecs::Transform>().GetPos().y - (Window_H - player.GetComponent<ecs::Transform>().GetSize().y) / 2;
+        camera.x = Player->GetComponent<ecs::Transform>().GetPos().x - (Window_W - Player->GetComponent<ecs::Transform>().GetSize().x) / 2; // camera.w/2
+        camera.y = Player->GetComponent<ecs::Transform>().GetPos().y - (Window_H - Player->GetComponent<ecs::Transform>().GetSize().y) / 2;
 
         // Caméra limitée par la bordure de la map
         if (camera.x < 0)
@@ -228,9 +230,9 @@ void PlayingState::Render(Game &game)
             p->Render();
         }
 
-        // for (auto &c : collidables)
-        // {
-        //     c->Render();
-        // }
+        for (auto &c : collidables)
+        {
+            c->Render();
+        }
     }
 }

@@ -20,9 +20,13 @@ namespace ecs {
 
         static void JoueurStopMouvement(Entity &entity);
 
+
         static void InventaireOpen(Entity &entity);
 
         static void InventaireClose(Entity &entity);
+
+        // ================ Generale =================
+        static void EntitySetVelocity(Entity &entity, Vector2 velocity);
 
         // Ajout d'autres actions selon les besoins
     };

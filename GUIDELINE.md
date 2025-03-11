@@ -32,6 +32,9 @@
     - Nom des inputs de machine a etat: `I_NOM_DE_LA_VARIALE`
     - Nom des actions de machine a etat: `A_NOM_DE_LA_VARIALE`
     - Nom des states de machine a etat: `S_NOM_DE_LA_VARIAL`
+    - ...
+6. Logique de programmation:
+    - Les Managers peuvent uniquement lire et avoir accès aux components des entités par contre c'est uniquement dans ComponentManager qu'existe les fonctions qui modifient les components des entités.
 ## *eventuellement d'autres choses dans lesquels définir des conventions?*
 
 # Ressources
