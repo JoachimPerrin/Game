@@ -3,3 +3,5 @@ docker/
 .vscode/
 .DS_Store
 LocalNotes.md
+Game.code-workspace
+

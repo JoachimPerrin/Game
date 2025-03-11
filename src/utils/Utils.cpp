@@ -2,6 +2,13 @@
 #include <SDL2/SDL_ttf.h>
 #include <cmath>
 
+SDL_Scancode keysP1[5] = {
+    SDL_SCANCODE_UP,
+    SDL_SCANCODE_DOWN,
+    SDL_SCANCODE_LEFT,
+    SDL_SCANCODE_RIGHT,
+    SDL_SCANCODE_SPACE
+};
 void ExitWithError(const std::string str, SDL_Window *w, SDL_Renderer *r)
 {
     if (r != nullptr)

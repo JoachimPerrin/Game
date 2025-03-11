@@ -2,6 +2,7 @@
 #include "Transform.hpp"
 #include "Collider.hpp"
 #include "Game.hpp"
+#include "FSM.hpp"
 #include <iostream>
 
 SDL_Rect PlayingState::camera = {0, 0, Window_W, Window_H};
@@ -57,10 +58,19 @@ void PlayingState::Exit(Game &game)
 
 void PlayingState::HandleEvent(Game &game)
 {
-    // TODO: implémenter les gestions d'evenements ici
-    SDL_Event event;
+    //TODO: implémenter les gestions d'evenements ici
+    SDL_Event event = game.event;
+
+    //Action qui demandent plusieur touche simultanement
+    Execute(actions[currentState][I_MOVE_P1]);
+    Execute(actions[currentState][I_MOVE_P2]);
+
+    
+
+    
     while (SDL_PollEvent(&event))
-    {
+    {   
+        //TODO: Ce qui suit est pr la machine a etat generale a changer
         if (event.type == SDL_QUIT ||
             (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE))
         {
@@ -70,11 +80,16 @@ void PlayingState::HandleEvent(Game &game)
         {
             switch (event.key.keysym.sym)
             {
+            
+            //Ici on gère les entrées qui change l'etat globale du jeu
             case SDLK_ESCAPE:
+
+                //TODO: ICI On doit faire intervenir machine a etat global en donnant l'entree p
+
                 game.running = false;
                 break;
-
-            case SDLK_p:
+                
+            case SDLK_p: 
                 if (dynamic_cast<PlayingState *>(game.currentState.get()))
                 {
                     game.ChangeState(game.pausedState);
@@ -83,32 +98,91 @@ void PlayingState::HandleEvent(Game &game)
                 {
                     game.ChangeState(game.playingState);
                 }
+                //TODO: ICI On doit faire intervenir machine a etat global en donnant l'entree p
+
                 break;
 
             case SDLK_r:
                 game.ChangeState(game.playingState);
+                break;
+            
+
+            //A PARTIR D'ICI On manage gère les entrées qui n'ont aucun rapport avec la changement d'etat globale
+            
+            //Joueur 1 MOVE
+
+            case SDLK_e:
+                Execute(A_INVENTORY_OPEN);
                 break;
 
             default:
                 break;
             }
         }
+        else if(event.type == SDL_KEYUP){
+            Execute(A_NONE);
+        }
         else if (event.type == SDL_MOUSEBUTTONDOWN)
         {
+            //TODO: Appeler la fonction de la machine a etat de playingstate avec la touche appuyer ici (en argument event.button.clicks)
             if (event.button.clicks >= 2)
                 game.ChangeState(game.pausedState);
         }
+        
     }
+}
+
+bool PlayingState::Execute(const PlayingActions action){
+
+    // Conditions
+    if(!Player->HasComponent<ecs::FSM<PlayerState, PlayerInput, nbPlayerStates, nbPlayerInputs>>()) return false;
+    
+    auto &playerFSM = Player->GetComponent<ecs::FSM<PlayerState, PlayerInput, nbPlayerStates, nbPlayerInputs>>();
+
+    switch(action){
+        case A_NONE:
+        break;
+
+        case A_MOVE_P1: //TODO: A modifier pour joueur 1 ou 2
+        
+            playerFSM.handleInput(I_MOVE);
+
+            break;
+        case A_MOVE_P2:
+            //TODO:
+            break;
+        case A_ATTACK:
+        break;
+        case A_JUMP:
+        break;
+        case A_INVENTORY_OPEN: //TODO: ICI MACHINE A ETAT DU JOUEUR (on le fait passer en mode inventaire)
+
+            playerFSM.handleInput(I_INVENTORY);
+
+        break;
+        case A_INVENTORY_CLOSE:
+        break;
+        case A_RUN:
+        break;
+        case A_USE_ITEM:
+        break;
+
+    }
+
+    //TODO: Rajouter
+    return true;
 }
 
 void PlayingState::Update(Game &game)
 {
-    // TODO: ajouter la logique d'update ici
+    //TODO: ajouter la logique d'update ici
     if (game.IsRunning())
     {
         collisions->Update(Game::manager);
         Game::manager.Refresh();
         Game::manager.Update();
+        
+
         if (!Player->IsActive())
         {
             game.ChangeState(game.playingState);
@@ -156,9 +230,9 @@ void PlayingState::Render(Game &game)
             p->Render();
         }
 
-        // for (auto &c : collidables)
-        // {
-        //     c->Render();
-        // }
+        for (auto &c : collidables)
+        {
+            c->Render();
+        }
     }
 }

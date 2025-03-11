@@ -44,6 +44,7 @@ public:
         enemies,
         players,
         maps,
+        controllables,
     };
 
     static SDL_Renderer *renderer;
