@@ -11,8 +11,8 @@
 #include "AssetsManager.hpp"
 #include "GoManager.hpp"
 
-const int Window_H = 600;
-const int Window_W = 800;
+const int Window_H = 1080;
+const int Window_W = 1920;
 class PlayingState;
 
 class Game

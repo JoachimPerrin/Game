@@ -56,7 +56,7 @@ void Game::InitWindow(const std::string &title, int width, int height, SDL_bool 
 
 void Game::InitRenderer()
 {
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (renderer == nullptr)
     {
         ExitWithError("Echec de création du rendu", window);

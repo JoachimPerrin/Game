@@ -25,7 +25,6 @@ public:
 
     static MapManager *mapManager;
     static SDL_Rect camera;
-
     PlayingStates currentState = S_SOLO; //TODO: Voir comment integrer S_IDLE
 
 private:
@@ -33,7 +32,7 @@ private:
     static const int nbStates = 2; //Propre a playingState TODO: a changer en fonction des modes a rjouter
     // static const int nbInputs = 2; //Propre a playingState
     //TODO: Rajouter variable isDay
-    
+    int Multiplayer;
 
     //TODO: A remplir en fonction du switch entre jour et nuit et IDLE
     // PlayingStates transitions[nbStates][nbInputs] = {
@@ -43,11 +42,10 @@ private:
     //     {S_DAY,         S_IDLE}     // S_IDLE
  
     // };
-
     PlayingActions actions[nbStates][nbGeneralInputs] = {
-    //  I_SPACE     I_P         I_MOVE_P1       I_MOVE_P2       I_LEFT          I_RIGHT         I_E      
-        {A_JUMP,    A_NONE,     A_MOVE_P1,      A_NONE,        A_NONE,         A_NONE,         A_NONE}, // S_SOLO
-        {A_JUMP,    A_NONE,     A_MOVE_P1,      A_MOVE_P2,        A_NONE,         A_NONE,         A_NONE}  // S_MULTI
+    //  I_SPACE     I_ATTACK_P1     I_ATTACK_P2     I_MOVE_P1   I_MOVE_P2   I_INV_P1        I_INV_P2        I_PAUSE      
+        {A_JUMP,    A_ATTACK_P1,    A_NONE,         A_MOVE_P1,  A_NONE,     A_INVENTORY_P1, A_NONE,         A_NONE}, // S_SOLO
+        {A_JUMP,    A_ATTACK_P1,    A_ATTACK_P2,    A_MOVE_P1,  A_MOVE_P2,  A_INVENTORY_P1, A_INVENTORY_P2, A_NONE}  // S_MULTI
     };
 
 };
