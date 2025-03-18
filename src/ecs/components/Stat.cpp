@@ -42,4 +42,6 @@ namespace ecs
     int Stat::GetSpeed() { return speed; }
     void Stat::Hurt(int damage) { hp -= damage; }
     void Stat::Healed(int heal) { hp += heal; }
+    unsigned int Stat::GetLastShot() { return lastShot; }
+    unsigned int Stat::GetShotDelay() { return shotDelay; }
 }

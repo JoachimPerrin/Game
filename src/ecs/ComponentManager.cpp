@@ -96,4 +96,64 @@ namespace ecs {
         }
     }
 
+    void ComponentManager::Tir(const SDL_Scancode keys[], Entity &entity){
+
+
+        if (!entity.HasComponent<ecs::Transform>()) {
+            std::cerr << "Entity is missing Transform component!" << std::endl;
+            return;
+        }
+
+        if (!entity.HasComponent<ecs::Stat>()) {
+            std::cerr << "Entity is missing Sprite component!" << std::endl;
+            return;
+        }
+
+        Transform &transform = entity.GetComponent<ecs::Transform>();
+        Stat &stat = entity.GetComponent<ecs::Stat>();
+        const Uint8 *keystates = SDL_GetKeyboardState(NULL);
+
+        // Gestion du tir
+        if (keystates[keys[5]] && stat.IsShotReady()) 
+        {
+            Vector2 projectileVelocity = transform.GetVel();
+            std::cout << "Tir" << std::endl;
+
+            // Vérifier si le joueur est en mouvement
+            float magnitude = sqrt(projectileVelocity.x * projectileVelocity.x + projectileVelocity.y * projectileVelocity.y);
+            
+            if (magnitude > 0.0f) 
+            {
+                // Normalisation pour conserver une vitesse constante du projectile
+                float speed = 20.0f;
+                projectileVelocity.x = (projectileVelocity.x / magnitude) * speed;
+                projectileVelocity.y = (projectileVelocity.y / magnitude) * speed;
+
+                // Création du projectile
+                Game::gobjs->CreateProjectile(
+                    Vector2(transform.GetPos().x, transform.GetPos().y), 
+                    projectileVelocity, 
+                    10000, 2, entity.GetComponent<Stat>().GetWeapon()
+                );
+
+                // Mise à jour du cooldown du tir
+                stat.SetLastShot();
+            }
+        }
+
+        unsigned int actionDelay = stat.GetShotDelay();
+        unsigned int lastAction = stat.GetLastShot();
+
+        // Changement d'arme
+        if (keystates[keys[6]] && SDL_GetTicks() - lastAction > actionDelay) 
+        {
+            std::cout << "Changement d'arme" << std::endl;
+            stat.ChangeWeapon();
+            stat.SetLastShot();
+        }
+
+    }
+
+
+
 }

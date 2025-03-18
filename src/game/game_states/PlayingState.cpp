@@ -65,6 +65,9 @@ void PlayingState::HandleEvent(Game &game)
     Execute(actions[currentState][I_MOVE_P1]);
     Execute(actions[currentState][I_MOVE_P2]);
 
+    Execute(actions[currentState][I_ATTACK_P1]);
+    Execute(actions[currentState][I_ATTACK_P2]);
+
     
 
     
@@ -108,12 +111,12 @@ void PlayingState::HandleEvent(Game &game)
             
 
             //A PARTIR D'ICI On manage gère les entrées qui n'ont aucun rapport avec la changement d'etat globale
-            
-            //Joueur 1 MOVE
-
+            // TODO: voir inventaire pr differents joueur + Ajouter fsm de playingstate
+            // Inventaire
             case SDLK_e:
-                Execute(A_INVENTORY_OPEN);
+                Execute(actions[currentState][I_INV_P1]);
                 break;
+            
 
             default:
                 break;
@@ -150,17 +153,22 @@ bool PlayingState::Execute(const PlayingActions action){
             break;
         case A_MOVE_P2:
             //TODO:
+            
             break;
-        case A_ATTACK:
+        case A_ATTACK_P1:
+            playerFSM.handleInput(I_ATTACK);
+        break;
+        case A_ATTACK_P2:
+
         break;
         case A_JUMP:
         break;
-        case A_INVENTORY_OPEN: //TODO: ICI MACHINE A ETAT DU JOUEUR (on le fait passer en mode inventaire)
+        case A_INVENTORY_P1: //TODO: ICI MACHINE A ETAT DU JOUEUR (on le fait passer en mode inventaire)
 
             playerFSM.handleInput(I_INVENTORY);
 
         break;
-        case A_INVENTORY_CLOSE:
+        case A_INVENTORY_P2:
         break;
         case A_RUN:
         break;
