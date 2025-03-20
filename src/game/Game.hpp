@@ -45,6 +45,7 @@ public:
         players,
         maps,
         controllables,
+        buttons,
     };
 
     static SDL_Renderer *renderer;

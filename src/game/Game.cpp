@@ -71,6 +71,10 @@ void Game::Initialize()
     assets->AddTexture("LobbyTileSet", "assets/images/TSLobby.png");
     assets->AddTexture("enemy", "assets/images/AEnemies.png");
     assets->AddTexture("projectile", "assets/images/AProjectiles.png");
+    assets->AddTexture("button", "assets/images/Button.png");
+
+    assets->AddFont("Dundalk", "assets/fonts/Dundalk.otf", 16);
+
     menuState = std::make_unique<MenuState>();
     playingState = std::make_unique<PlayingState>();
     pausedState = std::make_unique<PausedState>();
