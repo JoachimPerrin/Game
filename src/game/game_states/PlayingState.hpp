@@ -36,7 +36,7 @@ private:
     static const int nbStates = 2; // Propre a playingState TODO: a changer en fonction des modes a rjouter
     // static const int nbInputs = 2; //Propre a playingState
     // TODO: Rajouter variable isDay
-    int Multiplayer;
+    // int Multiplayer;
 
     // TODO: A remplir en fonction du switch entre jour et nuit et IDLE
     //  PlayingStates transitions[nbStates][nbInputs] = {
