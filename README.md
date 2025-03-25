@@ -24,7 +24,7 @@ apt-get update && apt-get install libsdl2-2.0-0 libsdl2-image-2.0-0 libsdl2-ttf-
 
 ```bash
     cd /Path/to/the/folder/you/want/this/project/in
-    git clone https://github.com/JoachimPerrin/Game.git
+    git clone -b semi-final https://github.com/JoachimPerrin/Game.git
     cd Game
     make
 ```
