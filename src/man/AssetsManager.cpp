@@ -33,6 +33,7 @@ AssetManager::~AssetManager()
 
     for (auto &pair : audios)
     {
+        Mix_HaltMusic();
         Mix_FreeMusic(pair.second);
     }
     audios.clear();

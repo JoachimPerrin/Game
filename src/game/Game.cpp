@@ -153,12 +153,7 @@ void Game::Cleanup()
         SDL_DestroyWindow(window);
         std::cout << "Fenêtre détruite" << std::endl;
     }
-    if (music) // FIXME: pas au bon endroit
-    {
-        Mix_FreeMusic(music);
-        music = nullptr;
-        Mix_CloseAudio();
-    }
+
     TTF_Quit();
     std::cout << "TTF quitté" << std::endl;
     IMG_Quit();
