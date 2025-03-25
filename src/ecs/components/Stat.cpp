@@ -3,7 +3,7 @@
 namespace ecs
 {
     Stat::Stat()
-        : speed(10), hp(100), lastShot(SDL_GetTicks()), shotDelay(400), weapon(allyProjectile) {} // peut-e^tre faire un choix de perso avec des stats différentes
+        : speed(10), hp(1000), lastShot(SDL_GetTicks()), shotDelay(400), weapon(allyProjectile) {} // peut-e^tre faire un choix de perso avec des stats différentes
 
     bool Stat::IsShotReady()
     {

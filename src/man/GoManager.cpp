@@ -35,7 +35,7 @@ ecs::Entity *GoManager::CreatePlayer(int numplayer)
     std::array<std::array<std::function<void()>, nbPlayerInputs>, nbPlayerStates> actions;
     if (numplayer == 1)
     {
-        player.AddComponent<ecs::Label>(SDL_Rect({0, 0, 66, 11}), "Jason-1012", true);
+        player.AddComponent<ecs::Label>(SDL_Rect({0, 0, 80, 15}), "Jason-1012", true);
         actions = {{
             {[&player]()
              { ecs::ComponentManager::JoueurMouvement(keysP1, player); }, [&player]()
@@ -55,7 +55,7 @@ ecs::Entity *GoManager::CreatePlayer(int numplayer)
     // Joueur 2
     else
     {
-        player.AddComponent<ecs::Label>(SDL_Rect({0, 0, 66, 11}), "Brandon-7528", true);
+        player.AddComponent<ecs::Label>(SDL_Rect({0, 0, 80, 15}), "Brandon-7528", true);
         actions = {{
             {[&player]()
              { ecs::ComponentManager::JoueurMouvement(keysP2, player); }, [&player]()
@@ -110,7 +110,10 @@ void GoManager::CreateProjectile(Vector2 position, Vector2 velocity, int range, 
 void GoManager::CreateEnemy(Vector2 position, ecs::EnemyType type)
 {
     auto &enemy(manager->AddEntity());
-    enemy.AddComponent<ecs::Transform>(Vector2(position.x, position.y), Vector2(0.0f, 0.0f), Vector2(32.0f, 32.0f), Vector2(3.0f, 3.0f));
+    float speed_x = rand() % 16 / 10.0f;
+    float speed_y = rand() % 16 / 10.0f;
+    std::cout << "speed_x : " << speed_x << " speed_y : " << speed_y << std::endl;
+    enemy.AddComponent<ecs::Transform>(Vector2(position.x, position.y), Vector2(speed_x, speed_y), Vector2(32.0f, 32.0f), Vector2(3.0f, 3.0f));
     enemy.AddComponent<ecs::Sprite>("enemy", true);
     enemy.AddComponent<ecs::Stat>();
     if (type == ecs::bat)

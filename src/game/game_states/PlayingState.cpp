@@ -6,6 +6,9 @@
 #include "Sprite.hpp"
 #include <iostream>
 
+#define NB_SPIDER 150
+#define NB_BAT 150
+
 SDL_Rect PlayingState::camera = {0, 0, Window_W, Window_H};
 MapManager *PlayingState::mapManager = new MapManager();
 CollisionManager *collisions = new CollisionManager();
@@ -45,7 +48,10 @@ void PlayingState::Enter(Game &game)
         std::cout << "Entering Playing State" << std::endl;
         Player = Game::gobjs->CreatePlayer(1);
         Game::gobjs->CreatePlayer(2);
-        Game::gobjs->CreateEnemy(Vector2(400.0f, 600.0f), ecs::spider);
+        for (int i = 0; i < NB_SPIDER; i++)
+            Game::gobjs->CreateEnemy(Vector2(2400.0f, 630.0f), ecs::spider);
+        for (int i = 0; i < NB_BAT; i++)
+            Game::gobjs->CreateEnemy(Vector2(2400.0f, 630.0f), ecs::bat);
 
         PlayBackgroundMusic();
     }
