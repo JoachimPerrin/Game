@@ -20,7 +20,7 @@ namespace ecs
             if (id == "Robot")
             {
                 Animation walk = Animation(0, 20, 50);
-                Animation idle = Animation(1, 20, 150);
+                Animation idle = Animation(1, 20, 100);
                 animations.emplace("Idle", idle);
                 animations.emplace("Walk", walk);
                 Play("Idle");

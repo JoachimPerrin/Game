@@ -156,7 +156,7 @@ void Game::Cleanup()
         SDL_DestroyWindow(window);
         std::cout << "Fenêtre détruite" << std::endl;
     }
-    Mix_FreeMusic(music);
+    //Mix_FreeMusic(music);
     Mix_CloseAudio();
     TTF_Quit();
     std::cout << "TTF quitté" << std::endl;

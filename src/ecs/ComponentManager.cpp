@@ -41,19 +41,51 @@ namespace ecs
         //
         // Gestion des directions
         if (keystates[keys[0]])
+        {
             vel.y = -1; // HAUT
+            transform.SetRot(-M_PI / 2);
+        }
         if (keystates[keys[1]])
+        {
             vel.y = 1; // BAS
+            transform.SetRot(M_PI / 2);
+        }
         if (keystates[keys[0]] && keystates[keys[1]])
             vel.y = 0; // HAUT ET BAS
 
         if (keystates[keys[2]])
+        {
             vel.x = -1; // GAUCHE
+            transform.SetRot(M_PI);
+        }
         if (keystates[keys[3]])
+        {
             vel.x = 1; // DROITE
+            transform.SetRot(0);
+        }
         if (keystates[keys[2]] && keystates[keys[3]])
             vel.x = 0; // GAUCHE ET DROITE
 
+        if (keystates[keys[0]] && keystates[keys[3]])
+        {
+            // HAUT ET DROITE
+            transform.SetRot(-M_PI/4);
+        }
+        if (keystates[keys[0]] && keystates[keys[2]])
+        {
+            // HAUT ET GAUCHE
+            transform.SetRot(-3*M_PI/4);
+        }
+        if (keystates[keys[1]] && keystates[keys[3]])
+        {
+            // BAS ET DROITE
+            transform.SetRot(M_PI/4);
+        }
+        if (keystates[keys[1]] && keystates[keys[2]])
+        {
+            // BAS ET GAUCHE
+            transform.SetRot(3*M_PI/4);
+        }
         // //Normalize velocity
         float mag = std::sqrt(vel.x * vel.x + vel.y * vel.y);
         if (mag > 0)
@@ -106,15 +138,17 @@ namespace ecs
         }
     }
 
-    void ComponentManager::Tir(const SDL_Scancode keys[], Entity &entity){
+    void ComponentManager::Tir(const SDL_Scancode keys[], Entity &entity)
+    {
 
-
-        if (!entity.HasComponent<ecs::Transform>()) {
+        if (!entity.HasComponent<ecs::Transform>())
+        {
             std::cerr << "Entity is missing Transform component!" << std::endl;
             return;
         }
 
-        if (!entity.HasComponent<ecs::Stat>()) {
+        if (!entity.HasComponent<ecs::Stat>())
+        {
             std::cerr << "Entity is missing Sprite component!" << std::endl;
             return;
         }
@@ -124,15 +158,15 @@ namespace ecs
         const Uint8 *keystates = SDL_GetKeyboardState(NULL);
 
         // Gestion du tir
-        if (keystates[keys[5]] && stat.IsShotReady()) 
+        if (keystates[keys[5]] && stat.IsShotReady())
         {
-            Vector2 projectileVelocity = transform.GetVel();
+            Vector2 projectileVelocity = Vector2(cos(transform.GetRot()), sin(transform.GetRot()));
             std::cout << "Tir" << std::endl;
 
             // Vérifier si le joueur est en mouvement
             float magnitude = sqrt(projectileVelocity.x * projectileVelocity.x + projectileVelocity.y * projectileVelocity.y);
-            
-            if (magnitude > 0.0f) 
+
+            if (magnitude > 0.0f)
             {
                 // Normalisation pour conserver une vitesse constante du projectile
                 float speed = 40.0f;
@@ -141,10 +175,9 @@ namespace ecs
 
                 // Création du projectile
                 Game::gobjs->CreateProjectile(
-                    Vector2(transform.GetPos().x ,transform.GetPos().y), 
-                    projectileVelocity, 
-                    10000, 2, entity.GetComponent<Stat>().GetWeapon()
-                );
+                    Vector2(transform.GetPos().x, transform.GetPos().y),
+                    projectileVelocity,
+                    10000, 2, entity.GetComponent<Stat>().GetWeapon());
 
                 // Mise à jour du cooldown du tir
                 stat.SetLastShot();
@@ -155,15 +188,12 @@ namespace ecs
         unsigned int lastAction = stat.GetLastShot();
 
         // Changement d'arme
-        if (keystates[keys[6]] && SDL_GetTicks() - lastAction > actionDelay) 
+        if (keystates[keys[6]] && SDL_GetTicks() - lastAction > actionDelay)
         {
             std::cout << "Changement d'arme" << std::endl;
             stat.ChangeWeapon();
             stat.SetLastShot();
         }
-
     }
-
-
 
 }

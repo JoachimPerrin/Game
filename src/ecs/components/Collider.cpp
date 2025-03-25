@@ -36,7 +36,6 @@ namespace ecs
                 Vector2 vec;
                 return vec;
             }
-            // TODO: Logic for collision between two AABBCollider
         }
         else if (CircularCollider *circle = dynamic_cast<CircularCollider *>(&other))
         {
@@ -45,7 +44,6 @@ namespace ecs
                 Vector2 vec;
                 return vec;
             }
-            // TODO: Logic for collision between an AABBCollider and a CircularCollider
         }
         Vector2 vec;
         return vec;
@@ -70,7 +68,8 @@ namespace ecs
 
     Vector2 CircularCollider::IsColliding(Collider &other)
     {
-        SetCenter(transform->GetPos().x + transform->GetSize().x * transform->GetScale().x / 2, transform->GetPos().y + transform->GetSize().y * transform->GetScale().y / 2);
+        SetCenter(transform->GetPos().x + transform->GetSize().x * transform->GetScale().x / 2, 
+                  transform->GetPos().y + transform->GetSize().y * transform->GetScale().y / 2);
         Vector2 centerA = GetCenter();
         if (AABBCollider *aabb = dynamic_cast<AABBCollider *>(&other))
         {
