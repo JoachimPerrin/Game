@@ -23,6 +23,7 @@ public:
     void Update(Game &game) override;
     void Render(Game &game) override;
 
+    void PlayBackgroundMusic();
     bool Execute(const PlayingActions action);
 
     static MapManager *mapManager;
@@ -32,6 +33,7 @@ public:
 
 private:
     int score = 0;
+    Mix_Music *BackgroundMusic;
     static const int nbStates = 2; // Propre a playingState TODO: a changer en fonction des modes a rjouter
     // static const int nbInputs = 2; //Propre a playingState
     // TODO: Rajouter variable isDay

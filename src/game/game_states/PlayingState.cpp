@@ -42,6 +42,8 @@ void PlayingState::Enter(Game &game)
         std::cout << "Entering Playing State" << std::endl;
         Player = Game::gobjs->CreatePlayer();
         Game::gobjs->CreateEnemy(Vector2(400.0f, 600.0f), ecs::spider);
+
+        PlayBackgroundMusic();
     }
 }
 
@@ -232,4 +234,10 @@ void PlayingState::Render(Game &game)
             c->Render();
         }
     }
+}
+
+void PlayingState::PlayBackgroundMusic()
+{
+    BackgroundMusic = AudioManager::LoadAudio("assets/audios/Theme1JC.mp3");
+    AudioManager::PlayAudio(BackgroundMusic, true);
 }

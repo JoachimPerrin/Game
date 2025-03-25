@@ -85,7 +85,6 @@ void Game::Initialize()
     currentState = menuState;
     currentState->Enter(*this);
 
-    PlayBackgroundMusic();
 }
 
 bool Game::IsRunning() const
@@ -137,23 +136,6 @@ void Game::Render()
         currentState->Render(*this);
 
         SDL_RenderPresent(renderer);
-    }
-}
-
-// FIXME: pas au bon endroit
-void Game::PlayBackgroundMusic()
-{
-    Mix_Music *music = assets->GetAudio("BackgroundMusic");
-    if (music != nullptr)
-    {
-        if (Mix_PlayMusic(music, -1) == -1) // -1 means loop indefinitely
-        {
-            std::cerr << "Error playing background music: " << Mix_GetError() << std::endl;
-        }
-    }
-    else
-    {
-        std::cerr << "Background music not found" << std::endl;
     }
 }
 

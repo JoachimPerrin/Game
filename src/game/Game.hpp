@@ -29,8 +29,6 @@ public:
     void HandleEvents();
     void Update();
     void Render();
-    // FIXME: pas ici
-    void PlayBackgroundMusic();
 
     void ChangeState(std::shared_ptr<GameState> newState);
 
@@ -63,7 +61,6 @@ private:
     void InitSDL();
     void InitWindow(const std::string &title, int width, int height, SDL_bool fullscreen);
     void InitRenderer();
-    void initAudio();
     void Initialize();
 
     std::shared_ptr<GameState> currentState;
