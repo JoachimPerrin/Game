@@ -16,7 +16,7 @@ void CollisionManager::GlideCollision(ecs::Entity *entity, Vector2 vec)
         if (vel.Project(vel, vec).x * vec.x > 0 || vel.Project(vel, vec).y * vec.y > 0)
         {
             // std::cout << "Vel :" << vel << "Vel projeté" << vel.Project(vel, normal) << std::endl;
-            ecs::ComponentManager::EntitySetVelocity(*entity, vel.Project(vel, normal));
+            ecs::ComponentManager::EntitySetVelocity(*entity, vel.Project(vel, normal)-vec);
             // entity->GetComponent<ecs::Transform>().SetVel(vel.Project(vel, normal));
         }
     }
@@ -99,7 +99,7 @@ void CollisionManager::Update(ecs::EntitiesManager &EMan)
                     ReboundCollision(enemy, vec);
                     if (player->HasComponent<ecs::Stat>())
                     {
-                        player->GetComponent<ecs::Stat>().Hurt(1);
+                        player->GetComponent<ecs::Stat>().Hurt(0.1);
                     }
                 }
             }
@@ -134,6 +134,21 @@ void CollisionManager::Update(ecs::EntitiesManager &EMan)
                 }
             }
         }
+        // for (auto &p : players)
+        // {
+        //     if (projectile->HasComponent<ecs::CircularCollider>() && p->HasComponent<ecs::CircularCollider>())
+        //     {
+        //         vec = projectile->GetComponent<ecs::CircularCollider>().IsColliding(p->GetComponent<ecs::CircularCollider>());
+        //         if (vec != nullvect)
+        //         {
+        //             projectile->Destroy();
+        //             if (p->HasComponent<ecs::Stat>())
+        //             {
+        //                 p->GetComponent<ecs::Stat>().Hurt(10);
+        //             }
+        //         }
+        //     }
+        // }
         for (auto &col : colidable)
         {
             if (projectile->HasComponent<ecs::CircularCollider>() && col->HasComponent<ecs::AABBCollider>())

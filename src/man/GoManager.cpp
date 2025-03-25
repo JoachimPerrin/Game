@@ -9,8 +9,9 @@
 #include "FSM.hpp"
 #include "ComponentManager.hpp"
 #include "Utils.hpp"
+#include <SDL2/SDL.h>
 
-ecs::Entity *GoManager::CreatePlayer()
+ecs::Entity *GoManager::CreatePlayer(int numplayer)
 {
     auto &player(Game::manager.AddEntity());
     player.AddComponent<ecs::Transform>(Vector2(500.0f, 700.0f), Vector2(0.0f, 0.0f), Vector2(32.0f, 32.0f), Vector2(3.0f, 3.0f));
@@ -23,27 +24,54 @@ ecs::Entity *GoManager::CreatePlayer()
     // FSM
     //  TODO: Matrice des transitions pour le joueur
     std::array<std::array<PlayerState, nbPlayerInputs>, nbPlayerStates> transitions = {{
-        // I_MOVE                    I_INVENTORY                 I_NONE
-        {PlayerState::S_RUNNING_JOUEUR, PlayerState::S_INVENTORY_JOUEUR, PlayerState::S_IDLE_JOUEUR},  // Etat IDLE
-        {PlayerState::S_RUNNING_JOUEUR, PlayerState::S_INVENTORY_JOUEUR, PlayerState::S_IDLE_JOUEUR},  // Etat RUNNING
-        {PlayerState::S_INVENTORY_JOUEUR, PlayerState::S_IDLE_JOUEUR, PlayerState::S_INVENTORY_JOUEUR} // Etat INVENTAIRE
+        // I_MOVE                           I_INVENTORY                        I_ATTACK                          I_NONE
+        {PlayerState::S_RUNNING_JOUEUR, PlayerState::S_INVENTORY_JOUEUR, PlayerState::S_IDLE_JOUEUR, PlayerState::S_IDLE_JOUEUR},       // Etat IDLE
+        {PlayerState::S_RUNNING_JOUEUR, PlayerState::S_INVENTORY_JOUEUR, PlayerState::S_RUNNING_JOUEUR, PlayerState::S_IDLE_JOUEUR},    // Etat RUNNING
+        {PlayerState::S_INVENTORY_JOUEUR, PlayerState::S_IDLE_JOUEUR, PlayerState::S_INVENTORY_JOUEUR, PlayerState::S_INVENTORY_JOUEUR} // Etat INVENTAIRE
     }};
 
     // Table des actions pour le joueur
     // TODO: VOIR SI JOEUR 1 OU 2 PR SAVOIR QUEL KEYS DONNEE
     // Joueur 1
+    std::array<std::array<std::function<void()>, nbPlayerInputs>, nbPlayerStates> actions;
+    if (numplayer == 1)
+    {
+        actions = {{
+            {[&player]()
+             { ecs::ComponentManager::JoueurMouvement(keysP1, player); }, [&player]()
+             { ecs::ComponentManager::InventaireOpen(player); }, [&player]()
+             { ecs::ComponentManager::Tir(keysP1, player); }, [&player]()
+             { ecs::ComponentManager::JoueurStopMouvement(player); }}, // IDLE
+            {[&player]()
+             { ecs::ComponentManager::JoueurMouvement(keysP1, player); }, [&player]()
+             { ecs::ComponentManager::InventaireOpen(player); }, [&player]()
+             { ecs::ComponentManager::Tir(keysP1, player); }, [&player]()
+             { ecs::ComponentManager::JoueurStopMouvement(player); }}, // RUNNING, /* additional arguments */
+            {[]() {}, [&player]()
+             { ecs::ComponentManager::InventaireClose(player); }, []() {}, []() {}} // INVENTAIRE
 
-    std::array<std::array<std::function<void()>, nbPlayerInputs>, nbPlayerStates> actions = {{
-        {[&player]()
-         { ecs::ComponentManager::JoueurMouvement(keysP1, player); }, []() {}, [&player]()
-         { ecs::ComponentManager::JoueurStopMouvement(player); }}, // IDLE
-        {[&player]()
-         { ecs::ComponentManager::JoueurMouvement(keysP1, player); }, [&player]()
-         { ecs::ComponentManager::InventaireOpen(player); }, [&player]()
-         { ecs::ComponentManager::JoueurStopMouvement(player); }}, // RUNNING, /* additional arguments */
-        {[]() {}, [&player]()
-         { ecs::ComponentManager::InventaireClose(player); }, []() {}} // INVENTAIRE
-    }};
+        }};
+    }
+    // Joueur 2
+    else
+    {
+        actions = {{
+            {[&player]()
+             { ecs::ComponentManager::JoueurMouvement(keysP2, player); }, [&player]()
+             { ecs::ComponentManager::InventaireOpen(player); }, [&player]()
+             { ecs::ComponentManager::Tir(keysP2, player); }, [&player]()
+             { ecs::ComponentManager::JoueurStopMouvement(player); }}, // IDLE
+            {[&player]()
+             { ecs::ComponentManager::JoueurMouvement(keysP2, player); }, [&player]()
+             { ecs::ComponentManager::InventaireOpen(player); }, [&player]()
+             { ecs::ComponentManager::Tir(keysP2, player); }, [&player]()
+             { ecs::ComponentManager::JoueurStopMouvement(player); }}, // RUNNING, /* additional arguments */
+            {[]() {}, [&player]()
+             { ecs::ComponentManager::InventaireClose(player); }, []() {}, []() {}} // INVENTAIRE
+
+        }};
+    }
+
     player.AddComponent<ecs::FSM<PlayerState, PlayerInput, nbPlayerStates, nbPlayerInputs>>(
         PlayerState::S_IDLE_JOUEUR, // État initial (ici, exemple pour un joueur)
         transitions,                // Matrice des transitions
@@ -93,7 +121,6 @@ void GoManager::CreateEnemy(Vector2 position, ecs::EnemyType type)
     {
         enemy.GetComponent<ecs::Sprite>().Play("Spider");
         enemy.AddComponent<ecs::CircularCollider>("Spider");
-
     }
     else if (type == ecs::snake)
     {

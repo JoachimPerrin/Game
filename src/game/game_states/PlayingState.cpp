@@ -3,6 +3,7 @@
 #include "Collider.hpp"
 #include "Game.hpp"
 #include "FSM.hpp"
+#include "Sprite.hpp"
 #include <iostream>
 
 SDL_Rect PlayingState::camera = {0, 0, Window_W, Window_H};
@@ -42,7 +43,8 @@ void PlayingState::Enter(Game &game)
     if (game.IsRunning())
     {
         std::cout << "Entering Playing State" << std::endl;
-        Player = Game::gobjs->CreatePlayer();
+        Player = Game::gobjs->CreatePlayer(1);
+        Game::gobjs->CreatePlayer(2);
         Game::gobjs->CreateEnemy(Vector2(400.0f, 600.0f), ecs::spider);
 
         PlayBackgroundMusic();
@@ -67,7 +69,10 @@ void PlayingState::HandleEvent(Game &game)
 
     // Action qui demandent plusieurs touche simultanement
     Execute(actions[currentState][I_MOVE_P1]);
-    Execute(actions[currentState][I_MOVE_P2]);
+    // Execute(actions[currentState][I_MOVE_P2]);
+
+    Execute(actions[currentState][I_ATTACK_P1]);
+    Execute(actions[currentState][I_ATTACK_P2]);
 
     while (SDL_PollEvent(&event))
     {
@@ -107,12 +112,11 @@ void PlayingState::HandleEvent(Game &game)
                 game.ChangeState(game.playingState);
                 break;
 
-                // A PARTIR D'ICI On manage gère les entrées qui n'ont aucun rapport avec la changement d'etat globale
-
-                // Joueur 1 MOVE
-
+            // A PARTIR D'ICI On manage gère les entrées qui n'ont aucun rapport avec la changement d'etat globale
+            //  TODO: voir inventaire pr differents joueur 2 + Ajouter fsm de playingstate
+            //  Inventaire
             case SDLK_e:
-                Execute(A_INVENTORY_OPEN);
+                Execute(actions[currentState][I_INV_P1]);
                 break;
 
             default:
@@ -134,40 +138,48 @@ void PlayingState::HandleEvent(Game &game)
 
 bool PlayingState::Execute(const PlayingActions action)
 {
+
     // Conditions
-    if (!Player->HasComponent<ecs::FSM<PlayerState, PlayerInput, nbPlayerStates, nbPlayerInputs>>())
-        return false;
 
-    auto &playerFSM = Player->GetComponent<ecs::FSM<PlayerState, PlayerInput, nbPlayerStates, nbPlayerInputs>>();
-
-    switch (action)
+    for (auto &p : players)
     {
-    case A_NONE:
-        break;
+        if (!p->HasComponent<ecs::FSM<PlayerState, PlayerInput, nbPlayerStates, nbPlayerInputs>>())
+            return false;
+        auto &playerFSM = p->GetComponent<ecs::FSM<PlayerState, PlayerInput, nbPlayerStates, nbPlayerInputs>>();
+        switch (action)
+        {
+        case A_NONE:
+            break;
 
-    case A_MOVE_P1: // TODO: A modifier pour joueur 1 ou 2
+        case A_MOVE_P1: // TODO: A modifier pour joueur 1 ou 2
 
-        playerFSM.handleInput(I_MOVE);
+            playerFSM.handleInput(I_MOVE);
 
-        break;
-    case A_MOVE_P2:
-        // TODO:
-        break;
-    case A_ATTACK:
-        break;
-    case A_JUMP:
-        break;
-    case A_INVENTORY_OPEN: // TODO: ICI MACHINE A ETAT DU JOUEUR (on le fait passer en mode inventaire)
+            break;
+        case A_MOVE_P2:
+            // TODO:
 
-        playerFSM.handleInput(I_INVENTORY);
+            break;
+        case A_ATTACK_P1:
+            playerFSM.handleInput(I_ATTACK);
+            break;
+        case A_ATTACK_P2:
 
-        break;
-    case A_INVENTORY_CLOSE:
-        break;
-    case A_RUN:
-        break;
-    case A_USE_ITEM:
-        break;
+            break;
+        case A_JUMP:
+            break;
+        case A_INVENTORY_P1: // TODO: ICI MACHINE A ETAT DU JOUEUR (on le fait passer en mode inventaire)
+
+            playerFSM.handleInput(I_INVENTORY);
+
+            break;
+        case A_INVENTORY_P2:
+            break;
+        case A_RUN:
+            break;
+        case A_USE_ITEM:
+            break;
+        }
     }
 
     // TODO: Rajouter
@@ -191,7 +203,6 @@ void PlayingState::Update(Game &game)
         // Caméra centrée sur le joueur
         camera.x = Player->GetComponent<ecs::Transform>().GetPos().x - (Window_W - Player->GetComponent<ecs::Transform>().GetSize().x) / 2; // camera.w/2
         camera.y = Player->GetComponent<ecs::Transform>().GetPos().y - (Window_H - Player->GetComponent<ecs::Transform>().GetSize().y) / 2;
-
         // Caméra limitée par la bordure de la map
         if (camera.x < 0)
             camera.x = 0;

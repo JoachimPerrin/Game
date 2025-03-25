@@ -25,7 +25,7 @@ class GoManager
 public:
     GoManager(ecs::EntitiesManager *man) : manager(man) {}
 
-    ecs::Entity *CreatePlayer();
+    ecs::Entity *CreatePlayer(int numplayer);
     void CreateEnemy(Vector2 position, ecs::EnemyType type);
     void CreateProjectile(Vector2 position, Vector2 velocity, int range, int speed, ecs::ProjectileType type);
     void CreateButton(SDL_Rect bbox, std::string text = "");

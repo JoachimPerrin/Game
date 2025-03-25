@@ -15,8 +15,12 @@
 #define NB_CHANNELS 2
 #define CHUNK_SIZE 2048
 
-const int Window_H = 600;
-const int Window_W = 800;
+#define AUDIO_FREQ 44100
+#define NB_CHANNELS 2
+#define CHUNK_SIZE 2048
+
+const int Window_H = 800;
+const int Window_W = 1200;
 class PlayingState;
 
 class Game
