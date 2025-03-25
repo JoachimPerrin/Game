@@ -25,6 +25,7 @@ class AssetManager
 public:
     AssetManager();
     ~AssetManager();
+
     void ClearTextures();
     void AddTexture(std::string id, const std::string path);
     SDL_Texture *GetTexture(std::string id);

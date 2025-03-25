@@ -16,7 +16,7 @@ ecs::Entity *GoManager::CreatePlayer()
     player.AddComponent<ecs::Transform>(Vector2(500.0f, 700.0f), Vector2(0.0f, 0.0f), Vector2(32.0f, 32.0f), Vector2(3.0f, 3.0f));
     player.AddComponent<ecs::Sprite>("Robot", true);
     // player.AddComponent<ecs::KeyboardController>();
-    player.AddComponent<ecs::Label>(SDL_Rect({0, 0, 20, 10}), "lvl 1", true);
+    player.AddComponent<ecs::Label>(SDL_Rect({0, 0, 80, 30}), "EFUCK-1010", true);
     player.AddComponent<ecs::Stat>();
     player.AddComponent<ecs::CircularCollider>("Robot");
 
