@@ -35,7 +35,7 @@ ecs::Entity *GoManager::CreatePlayer(int numplayer)
     std::array<std::array<std::function<void()>, nbPlayerInputs>, nbPlayerStates> actions;
     if (numplayer == 1)
     {
-        player.AddComponent<ecs::Label>(SDL_Rect({0, 0, 55, 11}), "Jason-1012", true);
+        player.AddComponent<ecs::Label>(SDL_Rect({0, 0, 66, 11}), "Jason-1012", true);
         actions = {{
             {[&player]()
              { ecs::ComponentManager::JoueurMouvement(keysP1, player); }, [&player]()
@@ -55,7 +55,7 @@ ecs::Entity *GoManager::CreatePlayer(int numplayer)
     // Joueur 2
     else
     {
-        player.AddComponent<ecs::Label>(SDL_Rect({0, 0, 55, 11}), "Brandon-7528", true);
+        player.AddComponent<ecs::Label>(SDL_Rect({0, 0, 66, 11}), "Brandon-7528", true);
         actions = {{
             {[&player]()
              { ecs::ComponentManager::JoueurMouvement(keysP2, player); }, [&player]()

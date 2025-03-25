@@ -46,7 +46,7 @@ namespace ecs
         if (mobile)
         {
             dstRect.x = transform->GetPos().x - PlayingState::camera.x;
-            dstRect.y = transform->GetPos().y - PlayingState::camera.y;
+            dstRect.y = transform->GetPos().y - PlayingState::camera.y - 10; // FIXME: offset magic number à retirer
         }
     }
 
