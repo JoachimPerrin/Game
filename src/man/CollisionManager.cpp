@@ -5,22 +5,15 @@
 
 void CollisionManager::GlideCollision(ecs::Entity *entity, Vector2 vec)
 {
-    // std::cout << "vec : " << vec << std::endl;
     if (entity->HasComponent<ecs::Transform>())
     {
-        // std::cout << vec << std::endl;
         Vector2 normal = vec.Normal();
-        // std::cout << normal << std::endl;
         Vector2 vel = entity->GetComponent<ecs::Transform>().GetVel();
-        // std::cout << vel << std::endl;
-        // std::cout << "Projection  : " << vel.Project(vel, vec) << std::endl;
         if (vel.Project(vel, vec).x * vec.x > 0 || vel.Project(vel, vec).y * vec.y > 0)
         {
-            // std::cout << "Vel :" << vel << "Vel projeté" << vel.Project(vel, normal) << std::endl;
             if (entity->HasComponent<ecs::Label>())
                 vec = Vector2();
             ecs::ComponentManager::EntitySetVelocity(*entity, vel.Project(vel, normal) - vec);
-            // entity->GetComponent<ecs::Transform>().SetVel(vel.Project(vel, normal));
         }
     }
 }

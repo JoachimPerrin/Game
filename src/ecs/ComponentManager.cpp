@@ -156,7 +156,6 @@ namespace ecs
         Transform &transform = entity.GetComponent<ecs::Transform>();
         Stat &stat = entity.GetComponent<ecs::Stat>();
         const Uint8 *keystates = SDL_GetKeyboardState(NULL);
-
         // Gestion du tir
         if (keystates[keys[5]] && stat.IsShotReady())
         {
